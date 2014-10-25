@@ -27,11 +27,17 @@ public class IngameAccountSwitcher {
 	public static void setSession(Session s) throws Exception {
 		Class<? extends Minecraft> mc = Minecraft.getMinecraft().getClass();
 		try {
-			Field session;
-			try {
-				session = mc.getDeclaredField("session");
-			} catch (Exception e) {
-				session = mc.getDeclaredField("aa");
+			Field session = null;
+			
+			for (Field f : mc.getDeclaredFields()) {
+				if (f.getType().isInstance(s)) {
+					session = f;
+					System.out.println("Found field " + f.toString() + ", injecting...");
+				}
+			}
+			
+			if (session == null) {
+				throw new IllegalStateException("No field of type " + Session.class.getCanonicalName() + " declared.");
 			}
 			
 			session.setAccessible(true);
