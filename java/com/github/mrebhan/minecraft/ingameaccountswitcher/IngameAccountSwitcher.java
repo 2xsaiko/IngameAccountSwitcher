@@ -27,7 +27,13 @@ public class IngameAccountSwitcher {
 	public static void setSession(Session s) throws Exception {
 		Class<? extends Minecraft> mc = Minecraft.getMinecraft().getClass();
 		try {
-			Field session = mc.getDeclaredField("session");
+			Field session;
+			try {
+				session = mc.getDeclaredField("session");
+			} catch (Exception e) {
+				session = mc.getDeclaredField("aa");
+			}
+			
 			session.setAccessible(true);
 			session.set(Minecraft.getMinecraft(), s);
 			session.setAccessible(false);
