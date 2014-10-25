@@ -1,6 +1,7 @@
 package com.github.mrebhan.minecraft.ingameaccountswitcher;
 
 import generic.minecraft.infinityclient.Config;
+import generic.minecraft.infinityclient.alt.AltDatabase;
 import generic.minecraft.infinityclient.ui.GuiAlts;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class GuiMainMenuIAS extends GuiMainMenu {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.drawCenteredString(fontRendererObj, "You are currently logged in as " + Minecraft.getMinecraft().getSession().getPlayerID(), this.width / 2, this.height / 4 + 48 + 72 + 12 + 22, 0xFFCC8888);
+		this.drawCenteredString(fontRendererObj, "You are currently logged in as " + Minecraft.getMinecraft().getSession().getUsername(), this.width / 2, this.height / 4 + 48 + 72 + 12 + 22, 0xFFCC8888);
 	}
 	
 	@Override
