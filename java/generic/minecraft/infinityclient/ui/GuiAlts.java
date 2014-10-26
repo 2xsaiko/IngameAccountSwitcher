@@ -1,6 +1,5 @@
 package generic.minecraft.infinityclient.ui;
 
-import generic.minecraft.infinityclient.Pair;
 import generic.minecraft.infinityclient.Tools;
 import generic.minecraft.infinityclient.alt.AccountData;
 import generic.minecraft.infinityclient.alt.AltDatabase;
@@ -12,13 +11,11 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
 
 public class GuiAlts extends GuiScreen {
 	private int selectedAlt = 0;
-	private int boxLength = -4;
-	private boolean failed;
+	private Throwable failed;
 	private ArrayList<AccountData> alts = AltDatabase.getInstance().getAlts();
 
 	@Override
@@ -41,18 +38,16 @@ public class GuiAlts extends GuiScreen {
 		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
 			this.drawCenteredString(fontRendererObj, "§cYou are currently in offline mode. You won't be able to join online servers.", this.width / 2, this.height - 32, -1);
 		}
-		if (failed) {
-			this.drawCenteredString(fontRendererObj, "§cFailed to log in. Please chack your account info and/or internet connection.", this.width / 2, this.height - 22, -1);
+		if (failed != null) {
+			this.drawCenteredString(fontRendererObj, "§c" + failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
 		}
 		GL11.glPushMatrix();
-		GL11.glTranslated(0, selectedAlt * 12, 0);
+		GL11.glTranslated(0, 13, 0);
 		for (int i = 0; i < alts.size(); i++) {
-			this.drawString(fontRendererObj, alts.get(i).alias, 2, this.height / 2 + -i * 12, -1);
+			this.drawString(fontRendererObj, alts.get(i).alias, 2, i * 12 + 2, -1);
 		}
+		Tools.drawBorderedRect(0, selectedAlt * 12, fontRendererObj.getStringWidth(s) + 4, selectedAlt * 12 + 12, 1, 0xff444444, 0x00000000);
 		GL11.glPopMatrix();
-		Tools.drawBorderedRect(0, this.height / 2 - 3, boxLength + 4, this.height / 2 + 9, 1, 0xff444444, 0x00000000);
-		int fontLength = fontRendererObj.getStringWidth(s);
-		boxLength += (boxLength > fontLength ? -1 : (boxLength < fontLength ? 1 : 0));
 		this.drawCenteredString(fontRendererObj, "§7[UP,DOWN]§r to navigate, §7[ENTER]§r to login, §7[SHIFT+ENTER]§r for offline login, §7[+]§r to add, §7[-]§r to remove, §7[ESCAPE]§r for Main Menu", this.width / 2, this.height - 12, -1);
 		super.drawScreen(par1, par2, par3);
 	}
@@ -73,30 +68,28 @@ public class GuiAlts extends GuiScreen {
 			}
 		}
 		if (par2 == Keyboard.KEY_UP) {
-			if (selectedAlt < alts.size() - 1) {
-				selectedAlt++;
+			if (selectedAlt > 0) {
+				selectedAlt--;
 			}
 		}
 		if (par2 == Keyboard.KEY_DOWN) {
-			if (selectedAlt > 0) {
-				selectedAlt--;
+			if (selectedAlt < alts.size() - 1) {
+				selectedAlt++;
 			}
 		}
 		if (par2 == Keyboard.KEY_RETURN) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 				AccountData data = alts.get(selectedAlt);
 				AltManager.getInstance().setUserOffline(data.alias);
-				failed = false;
+				failed = null;
 				Minecraft.getMinecraft().displayGuiScreen(null);
 				return;
 			}
 			try {
 				AccountData data = alts.get(selectedAlt);
-				boolean success = AltManager.getInstance().setUser(data.user, data.pass);
-				if (success) {
+				failed = AltManager.getInstance().setUser(data.user, data.pass);
+				if (failed == null) {
 					Minecraft.getMinecraft().displayGuiScreen(null);
-				} else {
-					failed = true;
 				}
 			} catch (Exception e) {
 				// TODO: handle exception

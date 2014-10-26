@@ -43,12 +43,12 @@ public class AltManager {
 		return manager;
 	}
 	
-	public boolean setUser(String username, String password) {
-		String oldUserId = Minecraft.getMinecraft().getSession().getUsername();
-		boolean success = false;
+	public Throwable setUser(String username, String password) {
+//		String oldUserId = Minecraft.getMinecraft().getSession().getUsername();
 		this.auth.logOut();
 		this.auth.setUsername(username);
 		this.auth.setPassword(password);
+		Throwable throwable = null;
 		try {
 			this.auth.logIn();
 			Session session = new Session(this.auth.getSelectedProfile().getName(), UUIDTypeAdapter.fromUUID(auth.getSelectedProfile().getId()), this.auth.getAuthenticatedToken(), this.auth.getUserType().getName());
@@ -59,12 +59,12 @@ public class AltManager {
 					data.alias = session.getUsername();
 				}
 			}
-			success = true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throwable = e;
 		}
-		return this.auth.isLoggedIn() && success;
+		return throwable;
 	}
 	
 	public boolean setUserOffline(String username) {
