@@ -17,7 +17,7 @@ public class GuiMainMenuIAS extends GuiMainMenu {
 		Config.save();
 		super.initGui();
 		int i = this.height / 4 + 48;
-		this.buttonList.add(new GuiButton(20, this.width / 2 + 104, i + 72 + 12, 20, 20, "A"));
+		this.buttonList.add(new GuiButtonWithImage(20, this.width / 2 + 104, i + 72 + 12, 20, 20, ""));
 	}
 	
 	@Override
