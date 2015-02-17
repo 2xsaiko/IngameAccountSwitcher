@@ -23,13 +23,19 @@ public class GuiMainMenuIAS extends GuiMainMenu {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		String localString;
-		if(Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode().contains("de_")){
+		if(languageIs("de")){
 			localString = "Sie sind derzeit angemeldat als ";
+		}else if(languageIs("es")){
+			localString = "En este momento está conectado como ";
 		}else{
 			localString = "You are currently logged in as ";
 		}
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		this.drawCenteredString(fontRendererObj, localString + Minecraft.getMinecraft().getSession().getUsername(), this.width / 2, this.height / 4 + 48 + 72 + 12 + 22, 0xFFCC8888);
+	}
+	
+	private boolean languageIs(String languagecode){
+		return Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode().contains(languagecode+"_");
 	}
 	
 	@Override
