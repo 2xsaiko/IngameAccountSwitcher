@@ -27,6 +27,8 @@ public class GuiMainMenuIAS extends GuiMainMenu {
 			localString = "Sie sind derzeit angemeldat als ";
 		}else if(languageIs("es")){
 			localString = "En este momento está conectado como ";
+		}else if(languageIs("fr")){
+			localString = "Vous êtes actuellement connecté en tant ";
 		}else{
 			localString = "You are currently logged in as ";
 		}
