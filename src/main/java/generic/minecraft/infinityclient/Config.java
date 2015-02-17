@@ -77,8 +77,11 @@ public class Config implements Serializable {
 				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir, configFileName)));
 				instance = (Config) stream.readObject();
 				stream.close();
-			} catch (IOException | ClassNotFoundException e) {
-				// TODO Auto-generated catch block
+			} catch (IOException e) {
+				e.printStackTrace();
+				instance = new Config();
+				f.delete();
+			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 				instance = new Config();
 				f.delete();
