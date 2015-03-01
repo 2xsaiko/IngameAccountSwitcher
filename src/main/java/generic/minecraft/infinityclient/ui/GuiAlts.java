@@ -36,10 +36,12 @@ public class GuiAlts extends GuiScreen {
 		this.drawDefaultBackground();
 		this.drawCenteredString(fontRendererObj, "Select an account", this.width / 2, 7, -1);
 		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
-			this.drawCenteredString(fontRendererObj, "§cYou are currently in offline mode. You won't be able to join online servers.", this.width / 2, this.height - 32, -1);
+			//this.drawCenteredString(fontRendererObj, "§cYou are currently in offline mode. You won't be able to join online servers.", this.width / 2, this.height - 32, -1);
+			this.drawCenteredString(fontRendererObj, "\u00A7cYou are currently in offline mode. You won't be able to join online servers.", this.width / 2, this.height - 32, -1);
 		}
 		if (failed != null) {
-			this.drawCenteredString(fontRendererObj, "§c" + failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
+			//this.drawCenteredString(fontRendererObj, "§c" + failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
+			this.drawCenteredString(fontRendererObj, "\u00A7c" + failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
 		}
 		GL11.glPushMatrix();
 		GL11.glTranslated(0, 13, 0);
@@ -48,7 +50,10 @@ public class GuiAlts extends GuiScreen {
 		}
 		Tools.drawBorderedRect(0, selectedAlt * 12, fontRendererObj.getStringWidth(s) + 4, selectedAlt * 12 + 12, 1, 0xff444444, 0x00000000);
 		GL11.glPopMatrix();
-		this.drawCenteredString(fontRendererObj, "§7[UP,DOWN]§r to navigate, §7[ENTER]§r to login, §7[SHIFT+ENTER]§r for offline login, §7[+]§r to add, §7[-]§r to remove, §7[ESCAPE]§r for Main Menu", this.width / 2, this.height - 12, -1);
+		//this.drawCenteredString(fontRendererObj, "§7[UP,DOWN]§r to navigate, §7[ENTER]§r to login, §7[SHIFT+ENTER]§r for offline login, §7[+]§r to add, §7[-]§r to remove, §7[ESCAPE]§r for Main Menu", this.width / 2, this.height - 12, -1);
+		//The � shows up in the game, I am not sure why it is there. Leaving old code line for convenience in case there is a reason for it.
+		this.drawCenteredString(fontRendererObj, "\u00A77[UP,DOWN]\u00A7r to navigate, \u00A77[ENTER]\u00A7r to login, \u00A77[SHIFT+ENTER]\u00A7r for offline login, \u00A77[+]\u00A7r to add, \u00A77[-]\u00A7r to remove, \u00A77[ESCAPE]\u00A7r for Main Menu", this.width / 2, this.height - 12, -1);
+		//Unicode for the Section symbol(�) is \u00A7
 		super.drawScreen(par1, par2, par3);
 	}
 

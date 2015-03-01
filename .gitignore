@@ -1,6 +1,45 @@
-/bin/
-/.gradle/
-/.settings/
-/build.gradle
-/.project
-/.classpath
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+gradle-wrapper.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Forge stuff
+cpw/*
+ibxm/*
+net/*
+paulscode/*
+assets/forge/*
+deobfuscation_data-*.lzma
+fml_at.cfg
+fml_marker.cfg
+fmlversion.properties
+forge_at.cfg
+forge_logo.png
+mcp.png
+mcpmod.info
+Start.java
+LICENSE-fml.txt
+MinecraftForge-Credits.txt
+MinecraftForge-License.txt
+README.txt
+CREDITS-fml.txt
+forge-*-changelog.txt
+.classpath
+.gradle/*
+.project
+.settings/*
+eclipse/*
+bin/*
+gradle/*
+build.gradle
+gradlew
+gradlew.bat
+build/natives/*
