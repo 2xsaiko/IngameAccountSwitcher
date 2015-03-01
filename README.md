@@ -1,2 +1,2 @@
 # IngameAccountSwitcher
-This is a fork of the Ingame Account Switcher Minecraft Mod
+This is the repository for the Ingame Account Switcher Minecraft Mod
