@@ -43,3 +43,4 @@ build.gradle
 gradlew
 gradlew.bat
 build/natives/*
+build/resources/*
