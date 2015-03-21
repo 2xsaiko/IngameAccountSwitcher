@@ -1,10 +1,10 @@
 package com.github.mrebhan.minecraft.ingameaccountswitcher;
 
-import generic.minecraft.infinityclient.Config;
-import generic.minecraft.infinityclient.alt.AltDatabase;
-import generic.minecraft.infinityclient.ui.GuiAlts;
-
 import java.io.IOException;
+
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Config;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AltDatabase;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.ui.GuiAlts;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

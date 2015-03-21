@@ -1,4 +1,4 @@
-package generic.minecraft.infinityclient.alt;
+package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt;
 
 import java.io.Serializable;
 

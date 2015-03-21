@@ -1,10 +1,10 @@
-package generic.minecraft.infinityclient.ui;
-
-import generic.minecraft.infinityclient.Pair;
-import generic.minecraft.infinityclient.alt.AccountData;
-import generic.minecraft.infinityclient.alt.AltDatabase;
+package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.ui;
 
 import org.lwjgl.input.Keyboard;
+
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Pair;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AccountData;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AltDatabase;
 
 import net.minecraft.client.gui.GuiScreen;;
 

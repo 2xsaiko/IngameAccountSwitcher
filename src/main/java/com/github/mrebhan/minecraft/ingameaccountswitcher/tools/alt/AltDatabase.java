@@ -1,12 +1,12 @@
-package generic.minecraft.infinityclient.alt;
+package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import generic.minecraft.infinityclient.Config;
-import generic.minecraft.infinityclient.Pair;
-import generic.minecraft.infinityclient.queuing.CallQueue;
-import generic.minecraft.infinityclient.queuing.QueueElement;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Config;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Pair;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.queuing.CallQueue;
+import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.queuing.QueueElement;
 
 public class AltDatabase implements Serializable {	
 	

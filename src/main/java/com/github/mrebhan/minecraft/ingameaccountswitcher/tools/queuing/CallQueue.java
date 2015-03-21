@@ -1,4 +1,4 @@
-package generic.minecraft.infinityclient.queuing;
+package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.queuing;
 
 import java.util.ArrayList;
 import java.util.List;

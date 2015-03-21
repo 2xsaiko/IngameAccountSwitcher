@@ -1,4 +1,4 @@
-package generic.minecraft.infinityclient;
+package com.github.mrebhan.minecraft.ingameaccountswitcher.tools;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,14 +63,14 @@ public class Config implements Serializable {
 	}
 	
 	public static void save() {
-		func_209921_b_();
+		getFromFile();
 	}
 	
 	public static void load() {
-		func_209921_c();
+		saveToFile();
 	}
 	
-	private static void func_209921_c() {
+	private static void saveToFile() {
 		File f = new File(Minecraft.getMinecraft().mcDataDir, configFileName);
 		if (f.exists()) {
 			try {
@@ -91,7 +91,7 @@ public class Config implements Serializable {
 			instance = new Config();
 	}
 
-	private static void func_209921_b_() {
+	private static void getFromFile() {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Minecraft.getMinecraft().mcDataDir, configFileName)));
 			out.writeObject(instance);

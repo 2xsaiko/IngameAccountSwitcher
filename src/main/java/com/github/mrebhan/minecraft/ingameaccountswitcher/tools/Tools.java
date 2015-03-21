@@ -1,4 +1,4 @@
-package generic.minecraft.infinityclient;
+package com.github.mrebhan.minecraft.ingameaccountswitcher.tools;
 
 import java.io.File;
 import java.io.FileInputStream;
