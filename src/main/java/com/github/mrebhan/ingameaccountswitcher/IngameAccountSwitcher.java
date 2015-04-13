@@ -33,7 +33,7 @@ public class IngameAccountSwitcher {
 	//Moved these here so they can be called from wherever in the mod they are needed
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.0.1.0";
+	public static final String VERSION = "2.0.0.1";
 	public static String releaseVersion = "";
 	public static String prereleaseVersion = "";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
