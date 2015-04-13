@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid="IngameAccountSwitcher", name="In-game Account Switcher", version="1.8-r2")
+@Mod(modid="IngameAccountSwitcher", name="In-game Account Switcher", version="2.0.1.0", clientSideOnly=true)
 public class IngameAccountSwitcher {
 	@Instance(value="IngameAccountSwitcher")
 	public static IngameAccountSwitcher instance;
