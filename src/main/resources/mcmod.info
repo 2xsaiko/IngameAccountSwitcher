@@ -11,7 +11,7 @@
   "credits": "Elvm for the idea and original mod",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": ["VersionChecker"],
+  "dependencies": ["VersionChecker","fireplacecore"],
   "requiredMods": [],
   "useDependencyInformation": true
 }
