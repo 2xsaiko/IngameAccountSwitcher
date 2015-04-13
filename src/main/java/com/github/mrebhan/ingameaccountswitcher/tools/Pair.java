@@ -1,4 +1,4 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools;
+package com.github.mrebhan.ingameaccountswitcher.tools;
 
 import java.io.Serializable;
 

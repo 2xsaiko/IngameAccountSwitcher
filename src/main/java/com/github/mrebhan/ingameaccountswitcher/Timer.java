@@ -1,4 +1,4 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher;
+package com.github.mrebhan.ingameaccountswitcher;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;

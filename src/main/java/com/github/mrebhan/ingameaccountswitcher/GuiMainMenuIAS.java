@@ -1,10 +1,10 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher;
+package com.github.mrebhan.ingameaccountswitcher;
 
 import java.io.IOException;
 
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Config;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AltDatabase;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.ui.GuiAlts;
+import com.github.mrebhan.ingameaccountswitcher.tools.Config;
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
+import com.github.mrebhan.ingameaccountswitcher.tools.ui.GuiAlts;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

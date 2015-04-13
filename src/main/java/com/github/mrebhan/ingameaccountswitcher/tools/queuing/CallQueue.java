@@ -1,4 +1,4 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.queuing;
+package com.github.mrebhan.ingameaccountswitcher.tools.queuing;
 
 import java.util.ArrayList;
 import java.util.List;

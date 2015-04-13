@@ -1,10 +1,10 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.ui;
+package com.github.mrebhan.ingameaccountswitcher.tools.ui;
 
 import org.lwjgl.input.Keyboard;
 
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Pair;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AccountData;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AltDatabase;
+import com.github.mrebhan.ingameaccountswitcher.tools.Pair;
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 
 import net.minecraft.client.gui.GuiScreen;;
 

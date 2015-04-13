@@ -1,8 +1,8 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher;
+package com.github.mrebhan.ingameaccountswitcher;
 
 import java.lang.reflect.Field;
 
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Config;
+import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;

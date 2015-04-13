@@ -1,4 +1,4 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt;
+package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
 import java.io.Serializable;
 

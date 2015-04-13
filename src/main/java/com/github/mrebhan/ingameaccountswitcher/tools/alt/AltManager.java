@@ -1,4 +1,4 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt;
+package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
 import java.util.Map;
 import java.util.UUID;
@@ -6,7 +6,7 @@ import java.util.UUID;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
-import com.github.mrebhan.minecraft.ingameaccountswitcher.IngameAccountSwitcher;
+import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.AuthenticationService;
 import com.mojang.authlib.GameProfile;

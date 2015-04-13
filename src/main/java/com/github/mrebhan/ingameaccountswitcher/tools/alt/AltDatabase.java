@@ -1,12 +1,12 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt;
+package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Config;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Pair;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.queuing.CallQueue;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.queuing.QueueElement;
+import com.github.mrebhan.ingameaccountswitcher.tools.Config;
+import com.github.mrebhan.ingameaccountswitcher.tools.Pair;
+import com.github.mrebhan.ingameaccountswitcher.tools.queuing.CallQueue;
+import com.github.mrebhan.ingameaccountswitcher.tools.queuing.QueueElement;
 
 public class AltDatabase implements Serializable {	
 	

@@ -1,14 +1,14 @@
-package com.github.mrebhan.minecraft.ingameaccountswitcher.tools.ui;
+package com.github.mrebhan.ingameaccountswitcher.tools.ui;
 
 import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.Tools;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AccountData;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AltDatabase;
-import com.github.mrebhan.minecraft.ingameaccountswitcher.tools.alt.AltManager;
+import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltManager;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
