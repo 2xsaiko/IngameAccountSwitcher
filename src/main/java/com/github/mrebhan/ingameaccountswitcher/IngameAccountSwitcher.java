@@ -2,6 +2,7 @@ package com.github.mrebhan.ingameaccountswitcher;
 
 import java.lang.reflect.Field;
 
+import com.github.mrebhan.ingameaccountswitcher.events.FMLEvents;
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
 import net.minecraft.client.Minecraft;
@@ -21,7 +22,7 @@ public class IngameAccountSwitcher {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Config.load();
-		FMLCommonHandler.instance().bus().register(new Timer());
+		FMLCommonHandler.instance().bus().register(new FMLEvents());
 	}
 	
 	public static void setSession(Session s) throws Exception {
