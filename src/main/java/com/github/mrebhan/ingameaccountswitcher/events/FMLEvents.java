@@ -1,11 +1,15 @@
 package com.github.mrebhan.ingameaccountswitcher.events;
 
 import com.github.mrebhan.ingameaccountswitcher.GuiMainMenuIAS;
+import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompat;
+import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompatAlt;
+import com.github.mrebhan.ingameaccountswitcher.compat.IFireCoreCompat;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
@@ -35,13 +39,19 @@ public class FMLEvents {
 					} catch (InterruptedException e) {
 					}
 
-				onPlayerJoinClientt(FMLClientHandler.instance()
+				onPlayerJoinClient(FMLClientHandler.instance()
 						.getClientPlayerEntity(), event);
 			}
 		}).start();
 	}
 	
-	public void onPlayerJoinClientt(EntityPlayer player, ClientConnectedToServerEvent event){
-		
+	public void onPlayerJoinClient(EntityPlayer player, ClientConnectedToServerEvent event){
+		IFireCoreCompat compat;
+		if(Loader.isModLoaded("fireplacecore")){
+			compat = new FireCoreCompat();
+		}else{
+			compat = new FireCoreCompatAlt();
+		}
+		compat.onPlayerJoinClient(player, event);
 	}
 }
