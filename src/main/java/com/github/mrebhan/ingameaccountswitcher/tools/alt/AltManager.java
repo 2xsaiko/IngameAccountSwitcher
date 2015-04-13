@@ -18,7 +18,9 @@ import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.util.UUIDTypeAdapter;
-
+/**
+ * @author mrebhan
+ */
 public class AltManager {
 	private static AltManager manager = null;
 	public AuthenticationService authService;

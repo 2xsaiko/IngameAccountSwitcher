@@ -12,7 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
-
+/**
+ * @author mrebhan
+ */
 public class Config implements Serializable {
 	public static final long serialVersionUID = 0xDEADBEEF;
 	
@@ -97,7 +99,6 @@ public class Config implements Serializable {
 			out.writeObject(instance);
 			out.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

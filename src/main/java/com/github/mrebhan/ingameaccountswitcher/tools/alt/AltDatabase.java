@@ -7,7 +7,9 @@ import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 import com.github.mrebhan.ingameaccountswitcher.tools.Pair;
 import com.github.mrebhan.ingameaccountswitcher.tools.queuing.CallQueue;
 import com.github.mrebhan.ingameaccountswitcher.tools.queuing.QueueElement;
-
+/**
+ * @author mrebhan
+ */
 public class AltDatabase implements Serializable {	
 	
 	public static final long serialVersionUID = 0xA17DA7AB;

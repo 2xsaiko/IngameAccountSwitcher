@@ -9,7 +9,10 @@ import com.github.mrebhan.ingameaccountswitcher.tools.ui.GuiAlts;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
-
+/**
+ * @author mrebhan
+ * @author The_Fireplace
+ */
 public class GuiMainMenuIAS extends GuiMainMenu {
 
 	@Override

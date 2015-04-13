@@ -5,7 +5,10 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-
+/**
+ * @author The_Fireplace
+ * The button with the image on it.
+ */
 public class GuiButtonWithImage extends GuiButton {
 
     protected static final ResourceLocation customButtonTextures = new ResourceLocation("accswitcher:textures/gui/custombutton.png");
