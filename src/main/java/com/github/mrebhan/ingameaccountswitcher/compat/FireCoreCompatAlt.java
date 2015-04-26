@@ -1,16 +1,16 @@
 package com.github.mrebhan.ingameaccountswitcher.compat;
 
-import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
-import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
-
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
+
+import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
+import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 /**
  * @author The_Fireplace
- * Used in the update checker if Fireplace Core is not running alongside In-Game Account Switcher
+ * Used in the update checker if Fireplace Core is not running alongside In-Game Account Switcher.
  */
 public class FireCoreCompatAlt implements IFireCoreCompat {
 
@@ -29,9 +29,9 @@ public class FireCoreCompatAlt implements IFireCoreCompat {
 
 		for (String line : lines)
 			((ICommandSender) player)
-					.addChatMessage(new ChatComponentText(line));
+			.addChatMessage(new ChatComponentText(line));
 	}
-	
+
 	@Override
 	public void onPlayerJoinClient(EntityPlayer player,
 			ClientConnectedToServerEvent event) {

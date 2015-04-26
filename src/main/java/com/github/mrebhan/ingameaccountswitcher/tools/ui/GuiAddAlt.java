@@ -1,13 +1,15 @@
 package com.github.mrebhan.ingameaccountswitcher.tools.ui;
 
+import net.minecraft.client.gui.GuiScreen;
+
 import org.lwjgl.input.Keyboard;
 
-import com.github.mrebhan.ingameaccountswitcher.tools.Pair;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
-
-import net.minecraft.client.gui.GuiScreen;;
-
+/**
+ * @author mrebhan
+ * @author The_Fireplace
+ */
 public class GuiAddAlt extends GuiScreen {
 
 	private String user = "", pass = "";

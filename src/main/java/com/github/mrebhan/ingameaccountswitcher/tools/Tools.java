@@ -1,27 +1,8 @@
 package com.github.mrebhan.ingameaccountswitcher.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.management.ManagementFactory;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
-
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
 /**
- * Contains a bunch of tools that didn't fit in another class.
  * @author mr
  * @author The_Fireplace
  */
@@ -65,9 +46,8 @@ public class Tools {
 		}
 		return -1;
 	}
-	
+
 	public static String join(String[] var2, String string) {
-		// TODO Auto-generated method stub
 		String var1 = "";
 		for (int i = 0; i < var2.length; i++) {
 			var1 += var2[i] + string;
@@ -100,7 +80,7 @@ public class Tools {
 		}
 		return var11;
 	}
-	
+
 	/**
 	 * Checks if the new version is higher than the current one
 	 * 

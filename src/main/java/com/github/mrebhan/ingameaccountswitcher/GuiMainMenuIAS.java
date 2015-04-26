@@ -2,13 +2,12 @@ package com.github.mrebhan.ingameaccountswitcher;
 
 import java.io.IOException;
 
-import com.github.mrebhan.ingameaccountswitcher.tools.Config;
-import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
-import com.github.mrebhan.ingameaccountswitcher.tools.ui.GuiAlts;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
+
+import com.github.mrebhan.ingameaccountswitcher.tools.Config;
+import com.github.mrebhan.ingameaccountswitcher.tools.ui.GuiAlts;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -22,7 +21,7 @@ public class GuiMainMenuIAS extends GuiMainMenu {
 		int i = this.height / 4 + 48;
 		this.buttonList.add(new GuiButtonWithImage(20, this.width / 2 + 104, i + 72 + 12, 20, 20, ""));
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		String localString;
@@ -36,20 +35,20 @@ public class GuiMainMenuIAS extends GuiMainMenu {
 			localString = "You are currently logged in as ";
 		}
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		this.drawCenteredString(fontRendererObj, localString + Minecraft.getMinecraft().getSession().getUsername(), this.width / 2, this.height / 4 + 48 + 72 + 12 + 22, 0xFFCC8888);
+		this.drawCenteredString(fontRendererObj, localString + Minecraft.getMinecraft().getSession().getUsername()+".", this.width / 2, this.height / 4 + 48 + 72 + 12 + 22, 0xFFCC8888);
 	}
-	
+
 	private boolean languageIs(String languagecode){
 		return Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode().contains(languagecode+"_");
 	}
-	
+
 	@Override
-    protected void actionPerformed(GuiButton button) throws IOException {
-    	if (button.id == 20) {
-    		Minecraft.getMinecraft().displayGuiScreen(new GuiAlts());
-    	} else {
-    		super.actionPerformed(button);
-    	}
-    }
-	
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if (button.id == 20) {
+			Minecraft.getMinecraft().displayGuiScreen(new GuiAlts());
+		} else {
+			super.actionPerformed(button);
+		}
+	}
+
 }
