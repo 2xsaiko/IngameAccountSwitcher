@@ -32,7 +32,7 @@ public class IngameAccountSwitcher {
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.0.2.0";
+	public static final String VERSION = "2.1.0.1";
 	public static String releaseVersion = "";
 	public static String prereleaseVersion = "";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
