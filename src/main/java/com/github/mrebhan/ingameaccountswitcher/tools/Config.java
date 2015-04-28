@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
+import the_fireplace.iasencrypt.Standards;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -72,7 +73,7 @@ public class Config implements Serializable {
 	}
 
 	private static void saveToFile() {
-		File f = new File(Minecraft.getMinecraft().mcDataDir, configFileName);
+		File f = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName);
 		if (f.exists()) {
 			try {
 				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir, configFileName)));

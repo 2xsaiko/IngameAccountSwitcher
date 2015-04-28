@@ -1,6 +1,8 @@
 package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
 import java.io.Serializable;
+
+import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * @author mrebhan
  */
@@ -9,8 +11,8 @@ public class AccountData implements Serializable {
 	public String user, pass, alias;
 
 	public AccountData(String user, String pass, String alias) {
-		this.user = user;
-		this.pass = pass;
+		this.user = EncryptionTools.encode(user);
+		this.pass = EncryptionTools.encode(pass);
 		this.alias = alias;
 	}
 }
