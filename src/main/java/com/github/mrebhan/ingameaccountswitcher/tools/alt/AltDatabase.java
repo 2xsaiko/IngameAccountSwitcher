@@ -9,27 +9,28 @@ import com.github.mrebhan.ingameaccountswitcher.tools.queuing.CallQueue;
 import com.github.mrebhan.ingameaccountswitcher.tools.queuing.QueueElement;
 /**
  * @author mrebhan
+ * @author The_Fireplace
  */
 public class AltDatabase implements Serializable {	
-	
+
 	public static final long serialVersionUID = 0xA17DA7AB;
 	private static AltDatabase instance;
-	
+
 	private ArrayList<AccountData> altList;
-	
+
 	private AltDatabase() {
 		this.altList = new ArrayList();
 	}
-	
+
 	public static void loadFromConfig() {
 		if (instance == null)
 			instance = (AltDatabase) Config.getInstance().getKey("altaccounts");
 	}
-	
+
 	public static void saveToConfig() {
 		Config.getInstance().setKey(new Pair<String, Object>("altaccounts", instance));
 	}
-	
+
 	public static AltDatabase getInstance() {
 		loadFromConfig();
 		if (instance == null) {
@@ -38,10 +39,10 @@ public class AltDatabase implements Serializable {
 		}
 		return instance;
 	}
-	
+
 	public ArrayList<AccountData> getAlts() {
 		CallQueue.addToQueue(new QueueElement(1) {
-			
+
 			@Override
 			public void onCall() {
 				AltDatabase.saveToConfig();
