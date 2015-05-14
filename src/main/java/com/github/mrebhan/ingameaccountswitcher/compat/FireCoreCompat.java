@@ -24,7 +24,7 @@ public class FireCoreCompat implements IFireCoreCompat {
 	public void onPlayerJoinClient(EntityPlayer player, ClientConnectedToServerEvent event) {
 		if (!IngameAccountSwitcher.prereleaseVersion.equals("")
 				&& !IngameAccountSwitcher.releaseVersion.equals("")) {
-			switch (FireCoreBaseFile.getUpdateNotification()) {
+			switch (FireCoreBaseFile.instance.getUpdateNotification()) {
 			case 0:
 				if (Tools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.releaseVersion) && Tools.isHigherVersion(IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.releaseVersion)) {
 					sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.releaseVersion, IngameAccountSwitcher.downloadURL);
