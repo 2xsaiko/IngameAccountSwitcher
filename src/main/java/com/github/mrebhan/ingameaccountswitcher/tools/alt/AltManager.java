@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
+import the_fireplace.iasencrypt.EncryptionTools;
 
 import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
 import com.mojang.authlib.Agent;
@@ -40,10 +41,10 @@ public class AltManager {
 	}
 
 	public Throwable setUser(String username, String password) {
-		//		String oldUserId = Minecraft.getMinecraft().getSession().getUsername();
+		//String oldUserId = Minecraft.getMinecraft().getSession().getUsername();
 		this.auth.logOut();
-		this.auth.setUsername(username);
-		this.auth.setPassword(password);
+		this.auth.setUsername(EncryptionTools.decode(username));
+		this.auth.setPassword(EncryptionTools.decode(password));
 		Throwable throwable = null;
 		try {
 			this.auth.logIn();
@@ -51,7 +52,7 @@ public class AltManager {
 			IngameAccountSwitcher.setSession(session);
 			for (int i = 0; i < AltDatabase.getInstance().getAlts().size(); i++) {
 				AccountData data = AltDatabase.getInstance().getAlts().get(i);
-				if (data.user.equals(username) && data.pass.equals(password)) {
+				if (data.user.equals(EncryptionTools.decode(username)) && data.pass.equals(EncryptionTools.decode(password))) {
 					data.alias = session.getUsername();
 				}
 			}

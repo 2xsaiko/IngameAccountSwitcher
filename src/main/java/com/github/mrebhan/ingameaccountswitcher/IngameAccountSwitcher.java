@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import the_fireplace.iasencrypt.Standards;
 
 import com.github.mrebhan.ingameaccountswitcher.events.FMLEvents;
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
@@ -31,7 +32,7 @@ public class IngameAccountSwitcher {
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.0.2.0";
+	public static final String VERSION = "2.1.0.1";
 	public static String releaseVersion = "";
 	public static String prereleaseVersion = "";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
@@ -40,6 +41,7 @@ public class IngameAccountSwitcher {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		Standards.generateConfigFile();
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		retriveCurrentVersions();
