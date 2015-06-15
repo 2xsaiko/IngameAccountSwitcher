@@ -12,7 +12,7 @@
   "logoFile": "",
   "screenshots": [],
   "dependencies": ["VersionChecker","fireplacecore"],
-  "requiredMods": [],
+  "requiredMods": ["Forge@[11.14.1.1325,)"],
   "useDependencyInformation": true
 }
 ]
