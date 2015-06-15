@@ -1,9 +1,11 @@
 package com.github.mrebhan.ingameaccountswitcher.compat;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import the_fireplace.fireplacecore.FireCoreBaseFile;
+import the_fireplace.fireplacecore.api.FCAPI;
 
 import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
 import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
@@ -17,32 +19,16 @@ public class FireCoreCompat implements IFireCoreCompat {
 	@Optional.Method(modid = "fireplacecore")
 	@Override
 	public void sendClientUpdateNotification(EntityPlayer player, String modname, String version, String downloadUrl) {
-		the_fireplace.fireplacecore.FireCoreBaseFile.sendClientUpdateNotification(player, modname, version, downloadUrl);
+		return;
 	}
 	@Optional.Method(modid = "fireplacecore")
 	@Override
 	public void onPlayerJoinClient(EntityPlayer player, ClientConnectedToServerEvent event) {
-		if (!IngameAccountSwitcher.prereleaseVersion.equals("")
-				&& !IngameAccountSwitcher.releaseVersion.equals("")) {
-			switch (FireCoreBaseFile.instance.getUpdateNotification()) {
-			case 0:
-				if (Tools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.releaseVersion) && Tools.isHigherVersion(IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.releaseVersion)) {
-					sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.releaseVersion, IngameAccountSwitcher.downloadURL);
-				}else if(Tools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.prereleaseVersion)){
-					sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.downloadURL);
-				}
-
-				break;
-			case 1:
-				if (Tools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.releaseVersion)) {
-					sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.releaseVersion, IngameAccountSwitcher.downloadURL);
-				}
-				break;
-			case 2:
-
-				break;
-			}
-		}
+		return;
 	}
-
+	@Optional.Method(modid = "fireplacecore")
+	@Override
+	public void registerUpdate(NBTTagCompound updateInfo, String modDisplayName, String oldVersion, String newPreVersion, String newVersion, String updateURL, String modid) {
+		FCAPI.registerModToVersionChecker(updateInfo, modDisplayName, oldVersion, newPreVersion, newVersion, updateURL, modid);
+	}
 }

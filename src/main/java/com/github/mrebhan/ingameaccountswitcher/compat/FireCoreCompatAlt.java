@@ -2,8 +2,10 @@ package com.github.mrebhan.ingameaccountswitcher.compat;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 
 import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
@@ -43,5 +45,27 @@ public class FireCoreCompatAlt implements IFireCoreCompat {
 				sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.downloadURL);
 			}
 		}
+	}
+	@Override
+	public void registerUpdate(NBTTagCompound updateInfo,
+			String modDisplayName, String oldVersion, String newPreVersion,
+			String newVersion, String updateURL, String modid) {
+		String versiontoshow;
+		if (!newVersion.equals("") && !newPreVersion.equals("")) {//Prevents crashing if the connection to the server failed.
+			if(Tools.isHigherVersion(newVersion, newPreVersion)){
+				versiontoshow = newPreVersion;
+			}else{
+				versiontoshow = newVersion;
+			}
+		}else{
+			versiontoshow = "0.0.0.0";
+		}
+		updateInfo.setString("modDisplayName", modDisplayName);
+		updateInfo.setString("oldVersion", oldVersion);
+		updateInfo.setString("newVersion", versiontoshow);
+		updateInfo.setString("updateURL", updateURL);
+		updateInfo.setBoolean("isDirectLink", false);
+		if(Tools.isHigherVersion(oldVersion, versiontoshow))
+			FMLInterModComms.sendRuntimeMessage(modid, "VersionChecker", "addUpdate", updateInfo);
 	}
 }

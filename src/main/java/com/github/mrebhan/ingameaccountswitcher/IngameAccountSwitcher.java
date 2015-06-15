@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Session;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -19,6 +20,9 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.iasencrypt.Standards;
 
+import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompat;
+import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompatAlt;
+import com.github.mrebhan.ingameaccountswitcher.compat.IFireCoreCompat;
 import com.github.mrebhan.ingameaccountswitcher.events.FMLEvents;
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
@@ -32,7 +36,7 @@ public class IngameAccountSwitcher {
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.1.0.1";
+	public static final String VERSION = "2.1.0.2";
 	public static String releaseVersion = "";
 	public static String prereleaseVersion = "";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
@@ -45,7 +49,12 @@ public class IngameAccountSwitcher {
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		retriveCurrentVersions();
-		this.addUpdateInfo(update, this.MODNAME, this.VERSION, this.prereleaseVersion, this.releaseVersion, this.downloadURL, this.MODID);
+		IFireCoreCompat compat;
+		if(Loader.isModLoaded("fireplacecore"))
+			compat = new FireCoreCompat();
+		else
+			compat = new FireCoreCompatAlt();
+		compat.registerUpdate(update, this.MODNAME, this.VERSION, this.prereleaseVersion, this.releaseVersion, this.downloadURL, this.MODID);
 	}
 
 	public static void setSession(Session s) throws Exception {
@@ -113,41 +122,5 @@ public class IngameAccountSwitcher {
 		}
 
 		return output;
-	}
-	/**
-	 * Makes update info available to Version Checker
-	 * @param updateInfo
-	 * 		The NBT Tag the information is stored in
-	 * @param modDisplayName
-	 * 		The mod's display name
-	 * @param oldVersion
-	 * 		The mod's current version
-	 * @param newPreVersion
-	 * 		The latest pre-release version
-	 * @param newVersion
-	 * 		The latest release version
-	 * @param updateURL
-	 * 		The URL users need to go to in order to get the latest version
-	 * @param modid
-	 * 		The modid
-	 */
-	public static void addUpdateInfo(NBTTagCompound updateInfo, String modDisplayName, String oldVersion, String newPreVersion, String newVersion, String updateURL, String modid){
-		String versiontoshow;
-		if (!newVersion.equals("") && !newPreVersion.equals("")) {//Prevents crashing if the connection to the server failed.
-			if(Tools.isHigherVersion(newVersion, newPreVersion)){
-				versiontoshow = newPreVersion;
-			}else{
-				versiontoshow = newVersion;
-			}
-		}else{
-			versiontoshow = "0.0.0.0";
-		}
-		updateInfo.setString("modDisplayName", modDisplayName);
-		updateInfo.setString("oldVersion", oldVersion);
-		updateInfo.setString("newVersion", versiontoshow);
-		updateInfo.setString("updateURL", updateURL);
-		updateInfo.setBoolean("isDirectLink", false);
-		if(Tools.isHigherVersion(oldVersion, versiontoshow))
-			FMLInterModComms.sendRuntimeMessage(modid, "VersionChecker", "addUpdate", updateInfo);
 	}
 }
