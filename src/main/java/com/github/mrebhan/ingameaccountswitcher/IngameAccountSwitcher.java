@@ -8,24 +8,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompat;
+import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompatAlt;
+import com.github.mrebhan.ingameaccountswitcher.compat.IFireCoreCompat;
+import com.github.mrebhan.ingameaccountswitcher.events.FMLEvents;
+import com.github.mrebhan.ingameaccountswitcher.events.ForgeEvents;
+import com.github.mrebhan.ingameaccountswitcher.tools.Config;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Session;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.iasencrypt.Standards;
-
-import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompat;
-import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompatAlt;
-import com.github.mrebhan.ingameaccountswitcher.compat.IFireCoreCompat;
-import com.github.mrebhan.ingameaccountswitcher.events.FMLEvents;
-import com.github.mrebhan.ingameaccountswitcher.tools.Config;
-import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -48,6 +48,7 @@ public class IngameAccountSwitcher {
 		Standards.generateConfigFile();
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
+		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
 		retriveCurrentVersions();
 		IFireCoreCompat compat;
 		if(Loader.isModLoaded("fireplacecore"))
@@ -89,11 +90,11 @@ public class IngameAccountSwitcher {
 		try {
 			releaseVersion = get_content(new URL(
 					"https://dl.dropboxusercontent.com/s/l2i7ua5u4j5i8sc/release.version?dl=0")
-			.openConnection());
+					.openConnection());
 
 			prereleaseVersion = get_content(new URL(
 					"https://dl.dropboxusercontent.com/s/55rwhwvai453yqz/prerelease.version?dl=0")
-			.openConnection());
+					.openConnection());
 
 		} catch (final MalformedURLException e) {
 			System.out.println("Malformed URL Exception");
