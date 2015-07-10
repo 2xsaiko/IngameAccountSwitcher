@@ -2,9 +2,6 @@ package com.github.mrebhan.ingameaccountswitcher.tools.ui;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -12,6 +9,10 @@ import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltManager;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.StatCollector;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -37,12 +38,12 @@ public class GuiAlts extends GuiScreen {
 			}
 		}
 		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, "Select an account", this.width / 2, 7, -1);
+		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.selectaccount"), this.width / 2, 7, -1);
 		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
-			this.drawCenteredString(fontRendererObj, "\u00A7cYou are currently in offline mode. You won't be able to join online servers.", this.width / 2, this.height - 32, -1);
+			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, this.height - 32, -1);
 		}
 		if (failed != null) {
-			this.drawCenteredString(fontRendererObj, "\u00A7c" + failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
+			this.drawCenteredString(fontRendererObj, failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
 		}
 		GL11.glPushMatrix();
 		GL11.glTranslated(0, 13, 0);
@@ -51,7 +52,7 @@ public class GuiAlts extends GuiScreen {
 		}
 		Tools.drawBorderedRect(0, selectedAlt * 12, fontRendererObj.getStringWidth(s) + 4, selectedAlt * 12 + 12, 1, 0xff444444, 0x00000000);
 		GL11.glPopMatrix();
-		this.drawCenteredString(fontRendererObj, "\u00A77[UP,DOWN]\u00A7r to navigate, \u00A77[ENTER]\u00A7r to login, \u00A77[SHIFT+ENTER]\u00A7r for offline login, \u00A77[+]\u00A7r to add, \u00A77[-]\u00A7r to remove, \u00A77[ESCAPE]\u00A7r for Main Menu", this.width / 2, this.height - 12, -1);
+		this.drawCenteredString(fontRendererObj, "[UP,DOWN] to navigate, [ENTER] to login, [SHIFT+ENTER] for offline login, [+] to add, [-] to remove, [ESCAPE] for Main Menu", this.width / 2, this.height - 12, -1);
 		super.drawScreen(par1, par2, par3);
 	}
 
@@ -81,7 +82,7 @@ public class GuiAlts extends GuiScreen {
 			}
 		}
 		if (par2 == Keyboard.KEY_RETURN) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 				AccountData data = alts.get(selectedAlt);
 				AltManager.getInstance().setUserOffline(data.alias);
 				failed = null;
