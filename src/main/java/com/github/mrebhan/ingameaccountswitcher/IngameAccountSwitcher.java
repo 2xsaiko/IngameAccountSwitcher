@@ -97,11 +97,9 @@ public class IngameAccountSwitcher {
 					.openConnection());
 
 		} catch (final MalformedURLException e) {
-			System.out.println("Malformed URL Exception");
 			releaseVersion = "";
 			prereleaseVersion = "";
 		} catch (final IOException e) {
-			System.out.println("IO Exception");
 			releaseVersion = "";
 			prereleaseVersion = "";
 		}
