@@ -50,7 +50,8 @@ public class GuiAlts extends GuiScreen {
 		for (int i = 0; i < alts.size(); i++) {
 			this.drawString(fontRendererObj, alts.get(i).alias, 2, i * 12 + 2, -1);
 		}
-		Tools.drawBorderedRect(0, selectedAlt * 12, fontRendererObj.getStringWidth(s) + 4, selectedAlt * 12 + 12, 1, 0xff444444, 0x00000000);
+		if(!alts.isEmpty())
+			Tools.drawBorderedRect(0, selectedAlt * 12, fontRendererObj.getStringWidth(s) + 4, selectedAlt * 12 + 12, 1, 0xff444444, 0x00000000);
 		GL11.glPopMatrix();
 		this.drawCenteredString(fontRendererObj, "[UP,DOWN] to navigate, [ENTER] to login, [SHIFT+ENTER] for offline login, [+] to add, [-] to remove, [ESCAPE] for Main Menu", this.width / 2, this.height - 12, -1);
 		super.drawScreen(par1, par2, par3);
