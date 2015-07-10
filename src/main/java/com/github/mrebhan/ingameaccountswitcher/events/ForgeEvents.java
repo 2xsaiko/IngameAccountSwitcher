@@ -1,7 +1,7 @@
 package com.github.mrebhan.ingameaccountswitcher.events;
 
-import com.github.mrebhan.ingameaccountswitcher.GuiButtonWithImage;
-import com.github.mrebhan.ingameaccountswitcher.tools.ui.GuiAlts;
+import com.github.mrebhan.ingameaccountswitcher.gui.GuiAlts;
+import com.github.mrebhan.ingameaccountswitcher.gui.GuiButtonWithImage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;

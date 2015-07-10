@@ -4,16 +4,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import the_fireplace.fireplacecore.FireCoreBaseFile;
 import the_fireplace.fireplacecore.api.FCAPI;
-
-import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
-import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 /**
- * @author The_Fireplace
  * Used in the update checker if Fireplace Core is running alongside In-Game Account Switcher.
  * Allows the use of the same update notification format as other mods using Fireplace Core.
  * Also allows you to disable the update checker via the Fireplace Core config.
+ *
+ * @author The_Fireplace
  */
 public class FireCoreCompat implements IFireCoreCompat {
 	@Optional.Method(modid = "fireplacecore")

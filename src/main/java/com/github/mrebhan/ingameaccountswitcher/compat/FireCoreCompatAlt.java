@@ -1,5 +1,8 @@
 package com.github.mrebhan.ingameaccountswitcher.compat;
 
+import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
+import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
+
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -7,12 +10,9 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-
-import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
-import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 /**
- * @author The_Fireplace
  * Used in the update checker if Fireplace Core is not running alongside In-Game Account Switcher.
+ * @author The_Fireplace
  */
 public class FireCoreCompatAlt implements IFireCoreCompat {
 

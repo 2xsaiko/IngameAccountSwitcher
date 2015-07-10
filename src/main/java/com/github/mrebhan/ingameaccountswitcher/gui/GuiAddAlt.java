@@ -1,4 +1,4 @@
-package com.github.mrebhan.ingameaccountswitcher.tools.ui;
+package com.github.mrebhan.ingameaccountswitcher.gui;
 
 import net.minecraft.client.gui.GuiScreen;
 

@@ -1,4 +1,4 @@
-package com.github.mrebhan.ingameaccountswitcher;
+package com.github.mrebhan.ingameaccountswitcher.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
