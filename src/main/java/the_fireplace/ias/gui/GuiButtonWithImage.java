@@ -1,4 +1,4 @@
-package com.github.mrebhan.ingameaccountswitcher.gui;
+package the_fireplace.ias.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

@@ -1,4 +1,4 @@
-package com.github.mrebhan.ingameaccountswitcher.tools;
+package the_fireplace.ias.tools;
 
 /**
  * @author The_Fireplace

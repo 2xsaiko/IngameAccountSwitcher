@@ -1,8 +1,4 @@
-package com.github.mrebhan.ingameaccountswitcher.events;
-
-import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompat;
-import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompatAlt;
-import com.github.mrebhan.ingameaccountswitcher.compat.IFireCoreCompat;
+package the_fireplace.ias.events;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -14,8 +10,10 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
+import the_fireplace.ias.compat.FireCoreCompat;
+import the_fireplace.ias.compat.FireCoreCompatAlt;
+import the_fireplace.ias.compat.IFireCoreCompat;
 /**
- * @author mrebhan
  * @author The_Fireplace
  */
 public class FMLEvents {

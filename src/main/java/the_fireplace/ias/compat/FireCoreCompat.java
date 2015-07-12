@@ -1,4 +1,4 @@
-package com.github.mrebhan.ingameaccountswitcher.compat;
+package the_fireplace.ias.compat;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;

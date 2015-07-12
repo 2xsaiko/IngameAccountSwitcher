@@ -1,7 +1,5 @@
-package com.github.mrebhan.ingameaccountswitcher.events;
+package the_fireplace.ias.events;
 
-import com.github.mrebhan.ingameaccountswitcher.gui.GuiAlts;
-import com.github.mrebhan.ingameaccountswitcher.gui.GuiButtonWithImage;
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
 import net.minecraft.client.Minecraft;
@@ -10,6 +8,8 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import the_fireplace.ias.gui.GuiAltSelector;
+import the_fireplace.ias.gui.GuiButtonWithImage;
 
 /**
  *
@@ -33,7 +33,7 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public void onClick(ActionPerformedEvent event){
 		if(event.gui instanceof GuiMainMenu && event.button.id == 20){
-			Minecraft.getMinecraft().displayGuiScreen(new GuiAlts());
+			Minecraft.getMinecraft().displayGuiScreen(new GuiAltSelector());
 		}
 	}
 }

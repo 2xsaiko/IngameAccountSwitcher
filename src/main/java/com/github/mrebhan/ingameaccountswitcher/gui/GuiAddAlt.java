@@ -1,6 +1,7 @@
 package com.github.mrebhan.ingameaccountswitcher.gui;
 
 import net.minecraft.client.gui.GuiScreen;
+import the_fireplace.ias.gui.GuiAltSelector;
 
 import org.lwjgl.input.Keyboard;
 
@@ -24,7 +25,7 @@ public class GuiAddAlt extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		if (loc == 2) {
 			AltDatabase.getInstance().getAlts().add(new AccountData(user, pass, user));
-			mc.displayGuiScreen(new GuiAlts());
+			mc.displayGuiScreen(new GuiAltSelector());
 		}
 		this.drawDefaultBackground();
 		this.drawCenteredString(fontRendererObj, "Add Alt", this.width / 2, 7, -1);
@@ -42,7 +43,7 @@ public class GuiAddAlt extends GuiScreen {
 	protected void keyTyped(char par1, int par2) {
 		if (par2 == Keyboard.KEY_ESCAPE) {
 			if (loc == 0) {
-				mc.displayGuiScreen(new GuiAlts());
+				mc.displayGuiScreen(new GuiAltSelector());
 			} else if (loc == 1) {
 				loc = 0;
 				pass = "";

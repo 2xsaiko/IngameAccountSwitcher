@@ -8,11 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
-import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompat;
-import com.github.mrebhan.ingameaccountswitcher.compat.FireCoreCompatAlt;
-import com.github.mrebhan.ingameaccountswitcher.compat.IFireCoreCompat;
-import com.github.mrebhan.ingameaccountswitcher.events.FMLEvents;
-import com.github.mrebhan.ingameaccountswitcher.events.ForgeEvents;
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
 import net.minecraft.client.Minecraft;
@@ -25,6 +20,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import the_fireplace.ias.compat.FireCoreCompat;
+import the_fireplace.ias.compat.FireCoreCompatAlt;
+import the_fireplace.ias.compat.IFireCoreCompat;
+import the_fireplace.ias.events.FMLEvents;
+import the_fireplace.ias.events.ForgeEvents;
 import the_fireplace.iasencrypt.Standards;
 /**
  * @author mrebhan
