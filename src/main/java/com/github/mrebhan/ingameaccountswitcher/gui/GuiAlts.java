@@ -89,6 +89,9 @@ public class GuiAlts extends GuiScreen {
 				mc.displayGuiScreen(new GuiAddAlt());
 			}else if(button.id == 4 && !alts.isEmpty()){
 				AltDatabase.getInstance().getAlts().remove(selectedAlt);
+				login.enabled=false;
+				logino.enabled=false;
+				del.enabled=false;
 			}else if(button.id == 1 && !alts.isEmpty()){
 				login(selectedAlt);
 			}else if(button.id == 2 && !alts.isEmpty()){
@@ -127,7 +130,7 @@ public class GuiAlts extends GuiScreen {
 	{
 		public List(Minecraft mcIn)
 		{
-			super(mcIn, GuiAlts.this.width, GuiAlts.this.height, 32, GuiAlts.this.height - 64, 24);
+			super(mcIn, GuiAlts.this.width, GuiAlts.this.height, 32, GuiAlts.this.height - 64, 12);
 		}
 
 		@Override
@@ -136,9 +139,6 @@ public class GuiAlts extends GuiScreen {
 			return GuiAlts.this.alts.size();
 		}
 
-		/**
-		 * The element in the slot that was clicked, boolean for whether it was double clicked or not
-		 */
 		@Override
 		protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY)
 		{
@@ -154,22 +154,16 @@ public class GuiAlts extends GuiScreen {
 			}
 		}
 
-		/**
-		 * Returns true if the element passed in is currently selected
-		 */
 		@Override
 		protected boolean isSelected(int slotIndex)
 		{
 			return slotIndex == GuiAlts.this.selectedAlt;
 		}
 
-		/**
-		 * Return the height of the content being scrolled
-		 */
 		@Override
 		protected int getContentHeight()
 		{
-			return GuiAlts.this.alts.size() * 36;
+			return GuiAlts.this.alts.size() * 12;
 		}
 
 		@Override
@@ -182,10 +176,13 @@ public class GuiAlts extends GuiScreen {
 		protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_)
 		{
 			String s = GuiAlts.this.alts.get(entryID).alias;
-			String s1 = GuiAlts.this.alts.get(entryID).user;
 			if (StringUtils.isEmpty(s))
 			{
 				s = StatCollector.translateToLocal("ias.alt") + " " + (entryID + 1);
+			}else{
+				if(s.contains("@")){
+
+				}
 			}
 
 			GuiAlts.this.drawString(GuiAlts.this.fontRendererObj, s, p_180791_2_ + 2, p_180791_3_ + 1, 16777215);
