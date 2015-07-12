@@ -2,6 +2,7 @@ package com.github.mrebhan.ingameaccountswitcher.events;
 
 import com.github.mrebhan.ingameaccountswitcher.gui.GuiAlts;
 import com.github.mrebhan.ingameaccountswitcher.gui.GuiButtonWithImage;
+import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -17,11 +18,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
  */
 public class ForgeEvents {
 	@SubscribeEvent
+	public void preGui(InitGuiEvent.Pre event){
+		if(event.gui instanceof GuiMainMenu){
+			Config.save();
+		}
+	}
+	@SubscribeEvent
 	public void guiEvent(InitGuiEvent.Post event){
 		GuiScreen gui = event.gui;
 		if(gui instanceof GuiMainMenu){
 			event.buttonList.add(new GuiButtonWithImage(20, gui.width / 2 + 104, (gui.height / 4 + 48) + 72 + 12, 20, 20, ""));
-
 		}
 	}
 	@SubscribeEvent
