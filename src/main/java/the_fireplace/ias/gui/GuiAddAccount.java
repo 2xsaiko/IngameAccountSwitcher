@@ -13,12 +13,11 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
 /**
  * The GUI where the alt is added
- * @author mrebhan
  * @author The_Fireplace
  */
 public class GuiAddAccount extends GuiScreen {
 
-	private String user = "", pass = "";
+	private String user = "", pass = "", cover = "";
 	private GuiTextField username;
 	private GuiTextField password;
 	private GuiButton addaccount;
@@ -45,20 +44,6 @@ public class GuiAddAccount extends GuiScreen {
 		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.password"), this.width / 2 - 130, 96, -1);
 		username.drawTextBox();
 		password.drawTextBox();
-		/*if (loc == 2) {
-			AltDatabase.getInstance().getAlts().add(new AccountData(user, pass, user));
-			mc.displayGuiScreen(new GuiAccountSelector());
-		}
-		this.drawDefaultBackground();
-		this.drawCenteredString(fontRendererObj, "Add Alt", this.width / 2, 7, -1);
-		this.drawString(fontRendererObj, "Username: " + user + (loc == 0 ? "_" : ""), 1, 16, -1);
-		String var1 = "";
-		for (int i = 0; i < pass.length(); i++) {
-			var1 += "*";
-		}
-		this.drawString(fontRendererObj, "Password: " + var1 + (loc == 1 ? "_" : ""), 1, 16 + 9, -1);
-		this.drawCenteredString(fontRendererObj, "§7[ENTER]§r for next, §7[ESCAPE]§r for backward", this.width / 2, this.height - 12, -1);
-		 */
 		super.drawScreen(par1, par2, par3);
 	}
 
@@ -78,6 +63,7 @@ public class GuiAddAccount extends GuiScreen {
 				user = user.substring(0, user.length() - 1);
 			} else if (password.isFocused() && pass.length() > 0) {
 				pass = pass.substring(0, pass.length() - 1);
+				cover = cover.substring(0, cover.length() - 1);
 			}
 			updateText();
 		} else if(keyIndex == Keyboard.KEY_TAB){
@@ -93,6 +79,7 @@ public class GuiAddAccount extends GuiScreen {
 				user += character;
 			} else if (password.isFocused()) {
 				pass += character;
+				cover += '*';
 			}
 			updateText();
 		}
@@ -153,6 +140,6 @@ public class GuiAddAccount extends GuiScreen {
 	 */
 	private void updateText(){
 		username.setText(user);
-		password.setText(pass);
+		password.setText(cover);
 	}
 }
