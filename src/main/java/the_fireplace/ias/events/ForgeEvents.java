@@ -8,13 +8,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import the_fireplace.ias.gui.GuiAltSelector;
+import the_fireplace.ias.gui.GuiAccountSelector;
 import the_fireplace.ias.gui.GuiButtonWithImage;
 
 /**
- *
  * @author The_Fireplace
- *
  */
 public class ForgeEvents {
 	@SubscribeEvent
@@ -33,7 +31,7 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public void onClick(ActionPerformedEvent event){
 		if(event.gui instanceof GuiMainMenu && event.button.id == 20){
-			Minecraft.getMinecraft().displayGuiScreen(new GuiAltSelector());
+			Minecraft.getMinecraft().displayGuiScreen(new GuiAccountSelector());
 		}
 	}
 }

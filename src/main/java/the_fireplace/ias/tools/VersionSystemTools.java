@@ -4,7 +4,7 @@ package the_fireplace.ias.tools;
  * @author The_Fireplace
  */
 
-public class Tools {
+public class VersionSystemTools {
 	/**
 	 * Checks if the new version is higher than the current one
 	 *
@@ -29,7 +29,7 @@ public class Tools {
 	 * Splits a version in to its number components (Format ".\d+\.\d+\.\d+.*" )
 	 *
 	 * @param Version
-	 *            The version to be split (Format is important!)
+	 *            The version to be split
 	 * @return The numeric version components as an integer array
 	 */
 	private static int[] splitVersion(String Version) {

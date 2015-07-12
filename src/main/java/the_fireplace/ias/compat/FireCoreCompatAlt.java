@@ -9,7 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import the_fireplace.ias.tools.Tools;
+import the_fireplace.ias.tools.VersionSystemTools;
 /**
  * Used in the update checker if Fireplace Core is not running alongside In-Game Account Switcher.
  * @author The_Fireplace
@@ -39,9 +39,9 @@ public class FireCoreCompatAlt implements IFireCoreCompat {
 			ClientConnectedToServerEvent event) {
 		if (!IngameAccountSwitcher.prereleaseVersion.equals("")
 				&& !IngameAccountSwitcher.releaseVersion.equals("")) {
-			if (Tools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.releaseVersion) && Tools.isHigherVersion(IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.releaseVersion)) {
+			if (VersionSystemTools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.releaseVersion) && VersionSystemTools.isHigherVersion(IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.releaseVersion)) {
 				sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.releaseVersion, IngameAccountSwitcher.downloadURL);
-			}else if(Tools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.prereleaseVersion)){
+			}else if(VersionSystemTools.isHigherVersion(IngameAccountSwitcher.VERSION, IngameAccountSwitcher.prereleaseVersion)){
 				sendClientUpdateNotification(player, IngameAccountSwitcher.MODNAME, IngameAccountSwitcher.prereleaseVersion, IngameAccountSwitcher.downloadURL);
 			}
 		}
@@ -52,7 +52,7 @@ public class FireCoreCompatAlt implements IFireCoreCompat {
 			String newVersion, String updateURL, String modid) {
 		String versiontoshow;
 		if (!newVersion.equals("") && !newPreVersion.equals("")) {//Prevents crashing if the connection to the server failed.
-			if(Tools.isHigherVersion(newVersion, newPreVersion)){
+			if(VersionSystemTools.isHigherVersion(newVersion, newPreVersion)){
 				versiontoshow = newPreVersion;
 			}else{
 				versiontoshow = newVersion;
@@ -65,7 +65,7 @@ public class FireCoreCompatAlt implements IFireCoreCompat {
 		updateInfo.setString("newVersion", versiontoshow);
 		updateInfo.setString("updateURL", updateURL);
 		updateInfo.setBoolean("isDirectLink", false);
-		if(Tools.isHigherVersion(oldVersion, versiontoshow))
+		if(VersionSystemTools.isHigherVersion(oldVersion, versiontoshow))
 			FMLInterModComms.sendRuntimeMessage(modid, "VersionChecker", "addUpdate", updateInfo);
 	}
 }
