@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 
-import com.github.mrebhan.ingameaccountswitcher.gui.GuiAddAlt;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltManager;
@@ -34,6 +33,7 @@ public class GuiAccountSelector extends GuiScreen {
 	public void initGui() {
 		accountsgui = new GuiAccountSelector.List(this.mc);
 		accountsgui.registerScrollButtons(5, 6);
+		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4, this.height - 52, 160, 20, StatCollector.translateToLocal("ias.addaccount")));
 		this.buttonList.add(login = new GuiButton(1, this.width / 2 - 154 - 10, this.height - 52, 160, 20, StatCollector.translateToLocal("ias.login")));
 		this.buttonList.add(loginoffline = new GuiButton(2, this.width / 2 - 154 - 10, this.height - 28, 110, 20, StatCollector.translateToLocal("ias.login")+" "+StatCollector.translateToLocal("ias.offline")));
@@ -111,7 +111,7 @@ public class GuiAccountSelector extends GuiScreen {
 	 * Add an account
 	 */
 	private void add(){
-		mc.displayGuiScreen(new GuiAddAlt());
+		mc.displayGuiScreen(new GuiAddAccount());
 	}
 	/**
 	 * Login to the account in offline mode, then return to main menu
