@@ -39,9 +39,9 @@ public class GuiAlts extends GuiScreen {
 		this.buttonList.add(logino = new GuiButton(2, this.width / 2 - 154 - 10, this.height - 28, 110, 20, StatCollector.translateToLocal("ias.login")+" "+StatCollector.translateToLocal("ias.offline")));
 		this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 50, this.height - 28, 110, 20, StatCollector.translateToLocal("gui.cancel")));
 		this.buttonList.add(del = new GuiButton(4, this.width / 2 - 50, this.height - 28, 100, 20, StatCollector.translateToLocal("ias.delete")));
-		login.enabled = false;
-		logino.enabled = false;
-		del.enabled = false;
+		login.enabled = !alts.isEmpty();
+		logino.enabled = !alts.isEmpty();
+		del.enabled = !alts.isEmpty();
 	}
 	@Override
 	public void handleMouseInput() throws IOException
@@ -53,29 +53,13 @@ public class GuiAlts extends GuiScreen {
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		lg.drawScreen(par1, par2, par3);
-		String s = "";
-		try {
-			s = alts.get(selectedAlt).alias;
-		} catch (Exception e) {
-			if (selectedAlt > 0) {
-				selectedAlt--;
-			}
-		}
-		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.selectaccount"), this.width / 2, 7, -1);
+		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.selectaccount"), this.width / 2, 4, -1);
 		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
-			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, this.height - 32, -1);
+			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, 14, -1);
 		}
 		if (failed != null) {
-			this.drawCenteredString(fontRendererObj, failed.getLocalizedMessage(), this.width / 2, this.height - 22, -1);
+			this.drawCenteredString(fontRendererObj, failed.getLocalizedMessage(), this.width / 2, 24, 16737380);
 		}
-		/*GL11.glPushMatrix();
-		GL11.glTranslated(0, 13, 0);
-		for (int i = 0; i < alts.size(); i++) {
-			this.drawString(fontRendererObj, alts.get(i).alias, 2, i * 12 + 2, -1);
-		}
-		if(!alts.isEmpty())
-			Tools.drawBorderedRect(0, selectedAlt * 12, fontRendererObj.getStringWidth(s) + 4, selectedAlt * 12 + 12, 1, 0xff444444, 0x00000000);
-		GL11.glPopMatrix();*/
 		super.drawScreen(par1, par2, par3);
 	}
 
@@ -84,25 +68,51 @@ public class GuiAlts extends GuiScreen {
 		if (button.enabled)
 		{
 			if(button.id == 3){
-				mc.displayGuiScreen(null);
+				escape();
 			}else if(button.id == 0){
-				mc.displayGuiScreen(new GuiAddAlt());
+				add();
 			}else if(button.id == 4 && !alts.isEmpty()){
-				AltDatabase.getInstance().getAlts().remove(selectedAlt);
-				login.enabled=false;
-				logino.enabled=false;
-				del.enabled=false;
+				delete();
 			}else if(button.id == 1 && !alts.isEmpty()){
 				login(selectedAlt);
 			}else if(button.id == 2 && !alts.isEmpty()){
-				AccountData data = alts.get(selectedAlt);
-				AltManager.getInstance().setUserOffline(data.alias);
-				failed = null;
-				Minecraft.getMinecraft().displayGuiScreen(null);
+				logino(selectedAlt);
 			}else{
 				lg.actionPerformed(button);
 			}
 		}
+	}
+
+	/**
+	 * Used to ensure that the alt list here stays synced with the main alt list
+	 */
+	private void refreshAlts(){
+		alts = AltDatabase.getInstance().getAlts();
+	}
+
+	private void escape(){
+		mc.displayGuiScreen(null);
+	}
+
+	private void delete(){
+		AltDatabase.getInstance().getAlts().remove(selectedAlt);
+		refreshAlts();
+		if(alts.isEmpty()){
+			login.enabled = false;
+			logino.enabled = false;
+			del.enabled = false;
+		}
+	}
+
+	private void add(){
+		mc.displayGuiScreen(new GuiAddAlt());
+	}
+
+	private void logino(int selected){
+		AccountData data = alts.get(selected);
+		AltManager.getInstance().setUserOffline(data.alias);
+		failed = null;
+		Minecraft.getMinecraft().displayGuiScreen(null);
 	}
 
 	@Override
@@ -115,6 +125,22 @@ public class GuiAlts extends GuiScreen {
 		if (par2 == Keyboard.KEY_DOWN) {
 			if (selectedAlt < alts.size() - 1) {
 				selectedAlt++;
+			}
+		}
+		if(par2 == Keyboard.KEY_ESCAPE){
+			escape();
+		}
+		if(par2 == Keyboard.KEY_DELETE){
+			delete();
+		}
+		if(par1 == '+'){
+			add();
+		}
+		if(par2 == Keyboard.KEY_RETURN){
+			if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+				logino(selectedAlt);
+			}else{
+				login(selectedAlt);
 			}
 		}
 	}
@@ -130,7 +156,7 @@ public class GuiAlts extends GuiScreen {
 	{
 		public List(Minecraft mcIn)
 		{
-			super(mcIn, GuiAlts.this.width, GuiAlts.this.height, 32, GuiAlts.this.height - 64, 12);
+			super(mcIn, GuiAlts.this.width, GuiAlts.this.height, 32, GuiAlts.this.height - 64, 14);
 		}
 
 		@Override
@@ -163,7 +189,7 @@ public class GuiAlts extends GuiScreen {
 		@Override
 		protected int getContentHeight()
 		{
-			return GuiAlts.this.alts.size() * 12;
+			return GuiAlts.this.alts.size() * 14;
 		}
 
 		@Override
@@ -179,10 +205,6 @@ public class GuiAlts extends GuiScreen {
 			if (StringUtils.isEmpty(s))
 			{
 				s = StatCollector.translateToLocal("ias.alt") + " " + (entryID + 1);
-			}else{
-				if(s.contains("@")){
-
-				}
 			}
 
 			GuiAlts.this.drawString(GuiAlts.this.fontRendererObj, s, p_180791_2_ + 2, p_180791_3_ + 1, 16777215);

@@ -28,10 +28,6 @@ public class FMLEvents {
 		}
 	}
 
-	private boolean languageIs(String languagecode){
-		return Minecraft.getMinecraft().getLanguageManager().getCurrentLanguage().getLanguageCode().contains(languagecode+"_");
-	}
-
 	@SubscribeEvent
 	public void onPlayerJoinClient(final ClientConnectedToServerEvent event) {
 		(new Thread() {
