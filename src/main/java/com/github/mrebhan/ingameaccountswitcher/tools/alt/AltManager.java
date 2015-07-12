@@ -2,10 +2,6 @@ package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
 import java.util.UUID;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.Session;
-import the_fireplace.iasencrypt.EncryptionTools;
-
 import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.AuthenticationService;
@@ -13,6 +9,10 @@ import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.util.UUIDTypeAdapter;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.Session;
+import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * @author mrebhan
  */
@@ -41,7 +41,6 @@ public class AltManager {
 	}
 
 	public Throwable setUser(String username, String password) {
-		//String oldUserId = Minecraft.getMinecraft().getSession().getUsername();
 		this.auth.logOut();
 		this.auth.setUsername(EncryptionTools.decode(username));
 		this.auth.setPassword(EncryptionTools.decode(password));
@@ -52,7 +51,7 @@ public class AltManager {
 			IngameAccountSwitcher.setSession(session);
 			for (int i = 0; i < AltDatabase.getInstance().getAlts().size(); i++) {
 				AccountData data = AltDatabase.getInstance().getAlts().get(i);
-				if (data.user.equals(EncryptionTools.decode(username)) && data.pass.equals(EncryptionTools.decode(password))) {
+				if (data.user.equals(username) && data.pass.equals(password)) {
 					data.alias = session.getUsername();
 				}
 			}
