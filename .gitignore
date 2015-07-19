@@ -44,3 +44,4 @@ gradlew
 gradlew.bat
 build/natives/*
 build/resources/*
+/bin/
