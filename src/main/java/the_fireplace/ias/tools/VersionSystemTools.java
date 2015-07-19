@@ -19,10 +19,24 @@ public class VersionSystemTools {
 		final int[] _current = splitVersion(currentVersion);
 		final int[] _new = splitVersion(newVersion);
 
-		return (_current[0] < _new[0])
-				|| ((_current[0] == _new[0]) && (_current[1] < _new[1]))
-				|| ((_current[0] == _new[0]) && (_current[1] == _new[1]) && (_current[2] < _new[2]))
-				|| ((_current[0] == _new[0]) && (_current[1] == _new[1]) && (_current[2] == _new[2]) && (_current[3] < _new[3]));
+		for (int i = 0; i < Math.max(_current.length, _new.length); i++) {
+			int curv = 0;
+			if (i < _current.length)
+				curv = _current[i];
+			
+			int newv = 0;
+			if (i < _new.length)
+				newv = _new[i];
+			
+			if (newv > curv) {
+				return true;
+			} else if (curv > newv) {
+				return false;
+			} else {
+				//go on
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -32,8 +46,8 @@ public class VersionSystemTools {
 	 *            The version to be split
 	 * @return The numeric version components as an integer array
 	 */
-	private static int[] splitVersion(String Version) {
-		final String[] tmp = Version.split("\\.");
+	private static int[] splitVersion(String version) {
+		final String[] tmp = version.split("\\.");
 		final int size = tmp.length;
 		final int out[] = new int[size];
 
