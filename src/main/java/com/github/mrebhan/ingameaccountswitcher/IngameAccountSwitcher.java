@@ -15,16 +15,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Session;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import the_fireplace.ias.compat.FireCoreCompat;
-import the_fireplace.ias.compat.FireCoreCompatAlt;
-import the_fireplace.ias.compat.IFireCoreCompat;
 import the_fireplace.ias.events.FMLEvents;
 import the_fireplace.ias.events.ForgeEvents;
+import the_fireplace.ias.tools.VersionChecker;
 import the_fireplace.iasencrypt.Standards;
 /**
  * @author mrebhan
@@ -36,7 +33,7 @@ public class IngameAccountSwitcher {
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.1.1.0";
+	public static final String VERSION = "2.1.2.0";
 	public static String releaseVersion = "";
 	public static String prereleaseVersion = "";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
@@ -50,12 +47,7 @@ public class IngameAccountSwitcher {
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
 		retriveCurrentVersions();
-		IFireCoreCompat compat;
-		if(Loader.isModLoaded("fireplacecore"))
-			compat = new FireCoreCompat();
-		else
-			compat = new FireCoreCompatAlt();
-		compat.registerUpdate(update, this.MODNAME, this.VERSION, this.prereleaseVersion, this.releaseVersion, this.downloadURL, this.MODID);
+		VersionChecker.registerUpdate(update, this.MODNAME, this.VERSION, this.prereleaseVersion, this.releaseVersion, this.downloadURL, this.MODID);
 	}
 
 	public static void setSession(Session s) throws Exception {

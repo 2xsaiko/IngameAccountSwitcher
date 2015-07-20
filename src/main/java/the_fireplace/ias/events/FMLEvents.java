@@ -6,13 +6,10 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import the_fireplace.ias.compat.FireCoreCompat;
-import the_fireplace.ias.compat.FireCoreCompatAlt;
-import the_fireplace.ias.compat.IFireCoreCompat;
+import the_fireplace.ias.tools.VersionChecker;
 /**
  * @author The_Fireplace
  */
@@ -44,12 +41,6 @@ public class FMLEvents {
 	}
 
 	public void onPlayerJoinClient(EntityPlayer player, ClientConnectedToServerEvent event){
-		IFireCoreCompat compat;
-		if(Loader.isModLoaded("fireplacecore")){
-			compat = new FireCoreCompat();
-		}else{
-			compat = new FireCoreCompatAlt();
-		}
-		compat.onPlayerJoinClient(player, event);
+		VersionChecker.onPlayerJoinClient(player, event);
 	}
 }

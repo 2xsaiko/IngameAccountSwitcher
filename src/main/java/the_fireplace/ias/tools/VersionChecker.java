@@ -1,41 +1,35 @@
-package the_fireplace.ias.compat;
+package the_fireplace.ias.tools;
 
 import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.event.ClickEvent;
+import net.minecraft.event.ClickEvent.Action;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
-import the_fireplace.ias.tools.VersionSystemTools;
 /**
- * Used in the update checker if Fireplace Core is not running alongside In-Game Account Switcher.
+ * Used in the update checker. Modified code from the FULCRUM Update Checker.
  * @author The_Fireplace
  */
-public class FireCoreCompatAlt implements IFireCoreCompat {
+public class VersionChecker {
 
-	@Override
-	public void sendClientUpdateNotification(EntityPlayer player, String modname, String version, String downloadUrl) {
-		if(!Loader.isModLoaded("VersionChecker"))
-			sendToPlayer(
-					player,
-					"A new version of "+modname+" is available!\n=========="
-							+ version
-							+ "==========\n"
-							+ "Download it at " + downloadUrl + " !");
-	}
-	private static void sendToPlayer(EntityPlayer player, String message) {
-		String[] lines = message.split("\n");
-
-		for (String line : lines)
-			((ICommandSender) player)
-			.addChatMessage(new ChatComponentText(line));
+	public static void sendClientUpdateNotification(EntityPlayer player, String modname, String version, String downloadUrl) {
+		if(!Loader.isModLoaded("VersionChecker")){
+			ICommandSender ics = player;
+			ics.addChatMessage(new ChatComponentText("A new version of "+modname+" is available!"));
+			ics.addChatMessage(new ChatComponentText("=========="+version+"=========="));
+			ics.addChatMessage(new ChatComponentText("Get it at the following link:"));
+			ics.addChatMessage(new ChatComponentText(downloadUrl).setChatStyle(new ChatStyle().setItalic(true).setUnderlined(true).setColor(EnumChatFormatting.BLUE).setChatClickEvent(new ClickEvent(Action.OPEN_URL, downloadUrl))));
+		}
 	}
 
-	@Override
-	public void onPlayerJoinClient(EntityPlayer player,
+	public static void onPlayerJoinClient(EntityPlayer player,
 			ClientConnectedToServerEvent event) {
 		if (!IngameAccountSwitcher.prereleaseVersion.equals("")
 				&& !IngameAccountSwitcher.releaseVersion.equals("")) {
@@ -46,8 +40,7 @@ public class FireCoreCompatAlt implements IFireCoreCompat {
 			}
 		}
 	}
-	@Override
-	public void registerUpdate(NBTTagCompound updateInfo,
+	public static void registerUpdate(NBTTagCompound updateInfo,
 			String modDisplayName, String oldVersion, String newPreVersion,
 			String newVersion, String updateURL, String modid) {
 		String versiontoshow;
