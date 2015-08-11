@@ -1,5 +1,9 @@
 package the_fireplace.ias.gui;
 
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
@@ -84,6 +88,31 @@ public class GuiEditAccount extends GuiScreen {
 			}else if(password.isFocused()){
 				username.setFocused(true);
 				password.setFocused(false);
+			}
+		} else if (keyIndex == Keyboard.KEY_V && (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL))){
+			if(username.isFocused()){
+				try {
+					user += (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+				} catch (HeadlessException e) {
+					e.printStackTrace();
+				} catch (UnsupportedFlavorException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else if(password.isFocused()){
+				try {
+					pass += (String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+					for(int i=0;i<((String)Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor)).length();i++){
+						cover += '*';
+					}
+				} catch (HeadlessException e) {
+					e.printStackTrace();
+				} catch (UnsupportedFlavorException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		} else if (character != 0) {
 			if (username.isFocused()) {
