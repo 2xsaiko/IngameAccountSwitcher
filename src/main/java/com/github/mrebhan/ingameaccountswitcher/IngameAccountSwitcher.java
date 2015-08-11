@@ -22,7 +22,6 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.ias.events.FMLEvents;
 import the_fireplace.ias.events.ForgeEvents;
 import the_fireplace.ias.tools.VersionChecker;
-import the_fireplace.iasencrypt.Standards;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -42,7 +41,6 @@ public class IngameAccountSwitcher {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		Standards.generateConfigFile();
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());

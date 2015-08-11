@@ -24,7 +24,7 @@ public class Config implements Serializable {
 
 	private ArrayList<Pair<String, Object>> field_218893_c;
 
-	public static Config getInstance() {		
+	public static Config getInstance() {
 		return instance;
 	}
 
@@ -76,11 +76,11 @@ public class Config implements Serializable {
 		saveToFile();
 	}
 
-	private static void saveToFile() {
+	private static void saveToFile() {//Shouldn't this and getFromFile be switched? This gets data from the file.
 		File f = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName);
 		if (f.exists()) {
 			try {
-				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(new File(Minecraft.getMinecraft().mcDataDir, configFileName)));
+				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(f));
 				instance = (Config) stream.readObject();
 				stream.close();
 			} catch (IOException e) {
@@ -97,9 +97,9 @@ public class Config implements Serializable {
 			instance = new Config();
 	}
 
-	private static void getFromFile() {
+	private static void getFromFile() {//Shouldn't this and saveToFile be switched? This saves data to the file.
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Minecraft.getMinecraft().mcDataDir, configFileName)));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName)));
 			out.writeObject(instance);
 			out.close();
 		} catch (IOException e) {
