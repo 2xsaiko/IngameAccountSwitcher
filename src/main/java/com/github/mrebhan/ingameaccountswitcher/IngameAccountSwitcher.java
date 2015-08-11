@@ -1,17 +1,10 @@
 package com.github.mrebhan.ingameaccountswitcher;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.Session;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -21,7 +14,6 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.ias.events.FMLEvents;
 import the_fireplace.ias.events.ForgeEvents;
-import the_fireplace.ias.tools.VersionChecker;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -32,20 +24,14 @@ public class IngameAccountSwitcher {
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static String releaseVersion = "";
-	public static String prereleaseVersion = "";
 	public static final String VERSION = "2.2.1.0";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
-	//For Dynious's Version Checker
-	public static NBTTagCompound update = new NBTTagCompound();
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
-		retriveCurrentVersions();
-		VersionChecker.registerUpdate(update, this.MODNAME, this.VERSION, this.prereleaseVersion, this.releaseVersion, this.downloadURL, this.MODID);
 	}
 
 	public static void setSession(Session s) throws Exception {
@@ -72,44 +58,5 @@ public class IngameAccountSwitcher {
 			throw e;
 		}
 	}
-
-	/**
-	 * Retrieves what the latest version is from Dropbox
-	 */
-	private static void retriveCurrentVersions() {
-		try {
-			releaseVersion = get_content(new URL(
-					"https://dl.dropboxusercontent.com/s/l2i7ua5u4j5i8sc/release.version?dl=0")
-					.openConnection());
-
-			prereleaseVersion = get_content(new URL(
-					"https://dl.dropboxusercontent.com/s/55rwhwvai453yqz/prerelease.version?dl=0")
-					.openConnection());
-
-		} catch (final MalformedURLException e) {
-			releaseVersion = "";
-			prereleaseVersion = "";
-		} catch (final IOException e) {
-			releaseVersion = "";
-			prereleaseVersion = "";
-		}
-	}
-
-	private static String get_content(URLConnection con) throws IOException {
-		String output = "";
-
-		if (con != null) {
-			final BufferedReader br = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-
-			String input;
-
-			while ((input = br.readLine()) != null) {
-				output = output + input;
-			}
-			br.close();
-		}
-
-		return output;
-	}
+	public static final String LATEST = "https://dl.dropboxusercontent.com/s/l2i7ua5u4j5i8sc/release.version?dl=0";
 }
