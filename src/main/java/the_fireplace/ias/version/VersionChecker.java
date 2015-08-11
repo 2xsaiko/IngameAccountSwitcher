@@ -49,7 +49,6 @@ public class VersionChecker {
 		downloadURL = IngameAccountSwitcher.downloadURL;
 	}
 
-
 	private void tryNotifyClient(EntityPlayer player){
 		if(!Loader.isModLoaded("VersionChecker") && isHigherVersion()){
 			ICommandSender ics = player;
