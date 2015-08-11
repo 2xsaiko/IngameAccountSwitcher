@@ -31,6 +31,12 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public void onClick(ActionPerformedEvent event){
 		if(event.gui instanceof GuiMainMenu && event.button.id == 20){
+			if(Config.getInstance() == null){
+				Config.load();
+			}
+			if(Minecraft.getMinecraft() == null){
+				System.out.println("Error: Server call");
+			}
 			Minecraft.getMinecraft().displayGuiScreen(new GuiAccountSelector());
 		}
 	}

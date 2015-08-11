@@ -49,6 +49,10 @@ public class Config implements Serializable {
 	}
 
 	public Object getKey(String key) {
+		if(field_218893_c == null){
+			System.out.println("Error: Config failed to load during PreInitialization. Loading now.");
+			load();
+		}
 		for (int i = 0; i < field_218893_c.size(); i++) {
 			if (field_218893_c.get(i).getValue1().equals(key))
 				return field_218893_c.get(i).getValue2();
