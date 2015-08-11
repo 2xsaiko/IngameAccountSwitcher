@@ -28,20 +28,25 @@ public class GuiAccountSelector extends GuiScreen {
 	private GuiButton login;
 	private GuiButton loginoffline;
 	private GuiButton delete;
+	private GuiButton edit;
 
 	@Override
 	public void initGui() {
 		accountsgui = new GuiAccountSelector.List(this.mc);
 		accountsgui.registerScrollButtons(5, 6);
 		this.buttonList.clear();
-		this.buttonList.add(new GuiButton(0, this.width / 2 + 4, this.height - 52, 160, 20, StatCollector.translateToLocal("ias.addaccount")));
-		this.buttonList.add(login = new GuiButton(1, this.width / 2 - 154 - 10, this.height - 52, 160, 20, StatCollector.translateToLocal("ias.login")));
+		//Top Row
+		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 40, this.height - 52, 120, 20, StatCollector.translateToLocal("ias.addaccount")));
+		this.buttonList.add(login = new GuiButton(1, this.width / 2 - 154 - 10, this.height - 52, 120, 20, StatCollector.translateToLocal("ias.login")));
+		this.buttonList.add(edit = new GuiButton(5, this.width / 2 - 40, this.height - 52, 80, 20, StatCollector.translateToLocal("ias.edit")));
+		//Bottom Row
 		this.buttonList.add(loginoffline = new GuiButton(2, this.width / 2 - 154 - 10, this.height - 28, 110, 20, StatCollector.translateToLocal("ias.login")+" "+StatCollector.translateToLocal("ias.offline")));
 		this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 50, this.height - 28, 110, 20, StatCollector.translateToLocal("gui.cancel")));
 		this.buttonList.add(delete = new GuiButton(4, this.width / 2 - 50, this.height - 28, 100, 20, StatCollector.translateToLocal("ias.delete")));
 		login.enabled = !accounts.isEmpty();
 		loginoffline.enabled = !accounts.isEmpty();
 		delete.enabled = !accounts.isEmpty();
+		edit.enabled = !accounts.isEmpty();
 	}
 	@Override
 	public void handleMouseInput() throws IOException
@@ -77,6 +82,8 @@ public class GuiAccountSelector extends GuiScreen {
 				login(selectedAccountIndex);
 			}else if(button.id == 2 && !accounts.isEmpty()){
 				logino(selectedAccountIndex);
+			}else if(button.id == 5){
+				edit();
 			}else{
 				accountsgui.actionPerformed(button);
 			}
@@ -105,6 +112,7 @@ public class GuiAccountSelector extends GuiScreen {
 			login.enabled = false;
 			loginoffline.enabled = false;
 			delete.enabled = false;
+			edit.enabled = false;
 		}
 	}
 	/**
@@ -136,6 +144,12 @@ public class GuiAccountSelector extends GuiScreen {
 			Minecraft.getMinecraft().displayGuiScreen(null);
 		}
 	}
+	/**
+	 * Edits the current account's information
+	 */
+	private void edit(){
+		mc.displayGuiScreen(new GuiEditAccount(selectedAccountIndex));
+	}
 
 	@Override
 	protected void keyTyped(char character, int keyIndex) {
@@ -157,6 +171,9 @@ public class GuiAccountSelector extends GuiScreen {
 		}
 		if(character == '+'){
 			add();
+		}
+		if(character == '/'){
+			edit();
 		}
 		if(keyIndex == Keyboard.KEY_RETURN){
 			if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
@@ -187,6 +204,7 @@ public class GuiAccountSelector extends GuiScreen {
 			GuiAccountSelector.this.login.enabled = flag;
 			GuiAccountSelector.this.loginoffline.enabled = flag;
 			GuiAccountSelector.this.delete.enabled = flag;
+			GuiAccountSelector.this.edit.enabled = flag;
 
 			if (isDoubleClick && flag)
 			{
