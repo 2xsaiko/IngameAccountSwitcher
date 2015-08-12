@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
+import the_fireplace.ias.config.ConfigValues;
 /**
  * The GUI where you can log in to, add, and remove accounts
  * @author The_Fireplace
@@ -132,6 +133,7 @@ public class GuiAccountSelector extends GuiScreen {
 	 */
 	private void refreshAlts(){
 		queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
+		updateQueried();
 	}
 	/**
 	 * Leave the gui
@@ -193,7 +195,10 @@ public class GuiAccountSelector extends GuiScreen {
 		queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
 		if(query != StatCollector.translateToLocal("ias.search") && query != ""){
 			for(int i=0;i<queriedaccounts.size();i++){
-				if(!queriedaccounts.get(i).alias.contains(query)){
+				if(!queriedaccounts.get(i).alias.contains(query) && ConfigValues.CASESENSITIVE){
+					queriedaccounts.remove(i);
+					i--;
+				}else if(!queriedaccounts.get(i).alias.toLowerCase().contains(query.toLowerCase()) && !ConfigValues.CASESENSITIVE){
 					queriedaccounts.remove(i);
 					i--;
 				}

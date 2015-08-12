@@ -7,18 +7,21 @@ import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import the_fireplace.ias.config.ConfigValues;
 import the_fireplace.ias.events.FMLEvents;
 import the_fireplace.ias.events.ForgeEvents;
 /**
  * @author mrebhan
  * @author The_Fireplace
  */
-@Mod(modid=IngameAccountSwitcher.MODID, name=IngameAccountSwitcher.MODNAME, version=IngameAccountSwitcher.VERSION, clientSideOnly=true)
+@Mod(modid=IngameAccountSwitcher.MODID, name=IngameAccountSwitcher.MODNAME, version=IngameAccountSwitcher.VERSION, clientSideOnly=true, guiFactory="the_fireplace.ias.config.IASGuiFactory")
 public class IngameAccountSwitcher {
 	@Instance(value=IngameAccountSwitcher.MODID)
 	public static IngameAccountSwitcher instance;
@@ -26,9 +29,23 @@ public class IngameAccountSwitcher {
 	public static final String MODNAME = "In-game Account Switcher";
 	public static final String VERSION = "2.2.1.0";
 	public static final String downloadURL = "http://goo.gl/1erpBM";
+	public static Configuration config;
+
+	public static Property CASESENSITIVE_PROPERTY;
+
+	public static void syncConfig(){
+		ConfigValues.CASESENSITIVE = CASESENSITIVE_PROPERTY.getBoolean();
+		if(config.hasChanged()){
+			config.save();
+		}
+	}
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		config = new Configuration(event.getSuggestedConfigurationFile());
+		config.load();
+		CASESENSITIVE_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.CASESENSITIVE_NAME, ConfigValues.CASESENSITIVE_DEFAULT, ConfigValues.CASESENSITIVE_NAME+".tooltip");
+		syncConfig();
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
