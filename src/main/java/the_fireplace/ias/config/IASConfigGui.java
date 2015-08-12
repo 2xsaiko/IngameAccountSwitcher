@@ -6,7 +6,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.config.GuiConfig;
-
+/**
+ * This is the config gui
+ * @author The_Fireplace
+ *
+ */
 public class IASConfigGui extends GuiConfig {
 
 	public IASConfigGui(GuiScreen parentScreen) {
