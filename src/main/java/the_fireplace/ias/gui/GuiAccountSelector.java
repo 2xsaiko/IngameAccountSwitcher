@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
 /**
  * The GUI where you can log in to, add, and remove accounts
@@ -22,31 +23,38 @@ import net.minecraft.util.StatCollector;
 public class GuiAccountSelector extends GuiScreen {
 	private int selectedAccountIndex = 0;
 	private Throwable loginfailed;
-	private ArrayList<AccountData> accounts = AltDatabase.getInstance().getAlts();
+	private ArrayList<AccountData> queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
 	private GuiAccountSelector.List accountsgui;
 	//Buttons that can be disabled need to be here
 	private GuiButton login;
 	private GuiButton loginoffline;
 	private GuiButton delete;
 	private GuiButton edit;
+	//Search
+	private String query;
+	private GuiTextField search;
 
 	@Override
 	public void initGui() {
+		Keyboard.enableRepeatEvents(true);
 		accountsgui = new GuiAccountSelector.List(this.mc);
 		accountsgui.registerScrollButtons(5, 6);
+		query = StatCollector.translateToLocal("ias.search");
 		this.buttonList.clear();
 		//Top Row
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 40, this.height - 52, 120, 20, StatCollector.translateToLocal("ias.addaccount")));
 		this.buttonList.add(login = new GuiButton(1, this.width / 2 - 154 - 10, this.height - 52, 120, 20, StatCollector.translateToLocal("ias.login")));
-		this.buttonList.add(edit = new GuiButton(5, this.width / 2 - 40, this.height - 52, 80, 20, StatCollector.translateToLocal("ias.edit")));
+		this.buttonList.add(edit = new GuiButton(7, this.width / 2 - 40, this.height - 52, 80, 20, StatCollector.translateToLocal("ias.edit")));
 		//Bottom Row
 		this.buttonList.add(loginoffline = new GuiButton(2, this.width / 2 - 154 - 10, this.height - 28, 110, 20, StatCollector.translateToLocal("ias.login")+" "+StatCollector.translateToLocal("ias.offline")));
 		this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 50, this.height - 28, 110, 20, StatCollector.translateToLocal("gui.cancel")));
 		this.buttonList.add(delete = new GuiButton(4, this.width / 2 - 50, this.height - 28, 100, 20, StatCollector.translateToLocal("ias.delete")));
-		login.enabled = !accounts.isEmpty();
-		loginoffline.enabled = !accounts.isEmpty();
-		delete.enabled = !accounts.isEmpty();
-		edit.enabled = !accounts.isEmpty();
+		search  = new GuiTextField(8, this.fontRendererObj, this.width / 2 - 80, 14, 160, 16);
+		search.setText(query);
+		login.enabled = !queriedaccounts.isEmpty();
+		loginoffline.enabled = !queriedaccounts.isEmpty();
+		delete.enabled = !queriedaccounts.isEmpty();
+		edit.enabled = !queriedaccounts.isEmpty();
 	}
 	@Override
 	public void handleMouseInput() throws IOException
@@ -56,15 +64,44 @@ public class GuiAccountSelector extends GuiScreen {
 	}
 
 	@Override
+	public void updateScreen(){
+		this.search.updateCursorCounter();
+		updateText();
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+	{
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		boolean flag = search.isFocused();
+		this.search.mouseClicked(mouseX, mouseY, mouseButton);
+		if(!flag && search.isFocused()){//TODO: Make this not erase if it isn't the default text
+			query = "";
+			updateText();
+		}
+	}
+
+	private void updateText(){
+		search.setText(query);
+	}
+
+	@Override
+	public void onGuiClosed()
+	{
+		Keyboard.enableRepeatEvents(false);
+	}
+
+	@Override
 	public void drawScreen(int par1, int par2, float par3) {
 		accountsgui.drawScreen(par1, par2, par3);
 		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.selectaccount"), this.width / 2, 4, -1);
 		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
-			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, 14, -1);
+			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, 14, -1);//TODO: Relocate, it overlaps the search field
 		}
 		if (loginfailed != null) {
-			this.drawCenteredString(fontRendererObj, loginfailed.getLocalizedMessage(), this.width / 2, 24, 16737380);
+			this.drawCenteredString(fontRendererObj, loginfailed.getLocalizedMessage(), this.width / 2, 24, 16737380);//TODO: Relocate, it overlaps the search field
 		}
+		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
 	}
 
@@ -76,13 +113,13 @@ public class GuiAccountSelector extends GuiScreen {
 				escape();
 			}else if(button.id == 0){
 				add();
-			}else if(button.id == 4 && !accounts.isEmpty()){
+			}else if(button.id == 4 && !queriedaccounts.isEmpty()){
 				delete();
-			}else if(button.id == 1 && !accounts.isEmpty()){
+			}else if(button.id == 1 && !queriedaccounts.isEmpty()){
 				login(selectedAccountIndex);
-			}else if(button.id == 2 && !accounts.isEmpty()){
+			}else if(button.id == 2 && !queriedaccounts.isEmpty()){
 				logino(selectedAccountIndex);
-			}else if(button.id == 5){
+			}else if(button.id == 7 && !queriedaccounts.isEmpty()){
 				edit();
 			}else{
 				accountsgui.actionPerformed(button);
@@ -94,7 +131,7 @@ public class GuiAccountSelector extends GuiScreen {
 	 * Used to ensure that the alt list here stays in sync with the main alt list
 	 */
 	private void refreshAlts(){
-		accounts = AltDatabase.getInstance().getAlts();
+		queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
 	}
 	/**
 	 * Leave the gui
@@ -106,9 +143,10 @@ public class GuiAccountSelector extends GuiScreen {
 	 * Delete the selected account
 	 */
 	private void delete(){
-		AltDatabase.getInstance().getAlts().remove(selectedAccountIndex);
+		System.out.println("Delete called on "+queriedaccounts.get(selectedAccountIndex));
+		AltDatabase.getInstance().getAlts().remove(queriedaccounts.get(selectedAccountIndex));
 		refreshAlts();
-		if(accounts.isEmpty()){
+		if(queriedaccounts.isEmpty()){
 			login.enabled = false;
 			loginoffline.enabled = false;
 			delete.enabled = false;
@@ -127,7 +165,7 @@ public class GuiAccountSelector extends GuiScreen {
 	 * 		The index of the account to log in to
 	 */
 	private void logino(int selected){
-		AccountData data = accounts.get(selected);
+		AccountData data = queriedaccounts.get(selected);
 		AltManager.getInstance().setUserOffline(data.alias);
 		loginfailed = null;
 		Minecraft.getMinecraft().displayGuiScreen(null);
@@ -138,7 +176,7 @@ public class GuiAccountSelector extends GuiScreen {
 	 * 		The index of the account to log in to
 	 */
 	private void login(int selected){
-		AccountData data = accounts.get(selected);
+		AccountData data = queriedaccounts.get(selected);
 		loginfailed = AltManager.getInstance().setUser(data.user, data.pass);
 		if (loginfailed == null) {
 			Minecraft.getMinecraft().displayGuiScreen(null);
@@ -151,35 +189,59 @@ public class GuiAccountSelector extends GuiScreen {
 		mc.displayGuiScreen(new GuiEditAccount(selectedAccountIndex));
 	}
 
+	private void updateQueried(){
+		queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
+		if(query != StatCollector.translateToLocal("ias.search") && query != ""){
+			for(int i=0;i<queriedaccounts.size();i++){
+				if(!queriedaccounts.get(i).alias.contains(query)){
+					queriedaccounts.remove(i);
+					i--;
+				}
+			}
+		}
+	}
+
 	@Override
 	protected void keyTyped(char character, int keyIndex) {
 		if (keyIndex == Keyboard.KEY_UP) {
 			if (selectedAccountIndex > 0) {
 				selectedAccountIndex--;
 			}
-		}
-		if (keyIndex == Keyboard.KEY_DOWN) {
-			if (selectedAccountIndex < accounts.size() - 1) {
+		} else if (keyIndex == Keyboard.KEY_DOWN) {
+			if (selectedAccountIndex < queriedaccounts.size() - 1) {
 				selectedAccountIndex++;
 			}
-		}
-		if(keyIndex == Keyboard.KEY_ESCAPE){
+		} else if(keyIndex == Keyboard.KEY_ESCAPE){
 			escape();
-		}
-		if(keyIndex == Keyboard.KEY_DELETE){
+		} else if(keyIndex == Keyboard.KEY_DELETE){
 			delete();
-		}
-		if(character == '+'){
+		} else if(character == '+'){
 			add();
-		}
-		if(character == '/'){
+		} else if(character == '/'){
 			edit();
-		}
-		if(keyIndex == Keyboard.KEY_RETURN){
+		} else if(keyIndex == Keyboard.KEY_RETURN && !search.isFocused()){
 			if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
 				logino(selectedAccountIndex);
 			}else{
 				login(selectedAccountIndex);
+			}
+		} else if(keyIndex == Keyboard.KEY_BACK){
+			if (search.isFocused() && query.length() > 0) {
+				query = query.substring(0, query.length()-1);
+				updateText();
+				updateQueried();
+			}
+		} else if (character != 0) {
+			if (search.isFocused()) {
+				if(keyIndex == Keyboard.KEY_RETURN){
+					search.setFocused(false);
+					updateText();
+					updateQueried();
+					return;
+				}
+				query += character;
+				updateText();
+				updateQueried();
 			}
 		}
 	}
@@ -193,7 +255,7 @@ public class GuiAccountSelector extends GuiScreen {
 		@Override
 		protected int getSize()
 		{
-			return GuiAccountSelector.this.accounts.size();
+			return GuiAccountSelector.this.queriedaccounts.size();
 		}
 
 		@Override
@@ -221,7 +283,7 @@ public class GuiAccountSelector extends GuiScreen {
 		@Override
 		protected int getContentHeight()
 		{
-			return GuiAccountSelector.this.accounts.size() * 14;
+			return GuiAccountSelector.this.queriedaccounts.size() * 14;
 		}
 
 		@Override
@@ -233,7 +295,7 @@ public class GuiAccountSelector extends GuiScreen {
 		@Override
 		protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_)
 		{
-			String s = GuiAccountSelector.this.accounts.get(entryID).alias;
+			String s = GuiAccountSelector.this.queriedaccounts.get(entryID).alias;
 			if (StringUtils.isEmpty(s))
 			{
 				s = StatCollector.translateToLocal("ias.alt") + " " + (entryID + 1);
