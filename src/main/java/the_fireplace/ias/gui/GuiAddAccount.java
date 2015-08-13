@@ -36,7 +36,7 @@ public class GuiAddAccount extends GuiScreen {
 		username.setFocused(true);
 		username.setText(user);
 		password = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 100, 90, 200, 20);
-		password.setText(pass);
+		password.setText(cover);
 		addaccount.enabled = username.getText().length() > 0;
 	}
 
