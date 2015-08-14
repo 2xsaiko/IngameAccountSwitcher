@@ -116,6 +116,7 @@ public class Config implements Serializable {
 				instance = (Config) stream.readObject();
 				stream.close();
 				f.delete();
+				System.out.println("Loaded data from old file");
 			} catch (IOException e) {
 				e.printStackTrace();
 				f.delete();
