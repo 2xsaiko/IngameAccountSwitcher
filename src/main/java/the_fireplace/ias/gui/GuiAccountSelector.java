@@ -76,7 +76,7 @@ public class GuiAccountSelector extends GuiScreen {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		boolean flag = search.isFocused();
 		this.search.mouseClicked(mouseX, mouseY, mouseButton);
-		if(!flag && search.isFocused()){//TODO: Make this not erase if it isn't the default text
+		if(!flag && search.isFocused()){
 			query = "";
 			updateText();
 		}
