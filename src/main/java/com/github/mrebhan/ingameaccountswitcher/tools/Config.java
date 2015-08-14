@@ -20,7 +20,7 @@ public class Config implements Serializable {
 
 	private static Config instance = null;
 
-	private static final String configFileName = "user.cfg";
+	private static final String configFileName = Standards.cfgn;
 
 	private ArrayList<Pair<String, Object>> field_218893_c;
 
@@ -73,6 +73,7 @@ public class Config implements Serializable {
 	}
 
 	public static void load() {
+		loadFromOld();
 		saveToFile();
 	}
 
@@ -104,6 +105,24 @@ public class Config implements Serializable {
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private static void loadFromOld(){
+		File f = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, "user.cfg");
+		if (f.exists()) {
+			try {
+				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(f));
+				instance = (Config) stream.readObject();
+				stream.close();
+				f.delete();
+			} catch (IOException e) {
+				e.printStackTrace();
+				f.delete();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				f.delete();
+			}
 		}
 	}
 }
