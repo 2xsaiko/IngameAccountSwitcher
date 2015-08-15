@@ -8,13 +8,13 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
-import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
+import the_fireplace.ias.account.ExtendedAccountData;
 /**
  * The GUI where the alt is added
  * @author The_Fireplace
@@ -160,7 +160,7 @@ public class GuiAddAccount extends GuiScreen {
 	 * Add account and return to account selector
 	 */
 	private void addAccount(){
-		AltDatabase.getInstance().getAlts().add(new AccountData(user, pass, user));
+		AltDatabase.getInstance().getAlts().add(new ExtendedAccountData(user, pass, user));
 		mc.displayGuiScreen(new GuiAccountSelector());
 	}
 

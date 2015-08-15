@@ -16,7 +16,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
+import the_fireplace.ias.account.ExtendedAccountData;
 import the_fireplace.ias.config.ConfigValues;
+import the_fireplace.ias.enums.EnumBool;
+import the_fireplace.ias.tools.HttpTools;
+import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * The GUI where you can log in to, add, and remove accounts
  * @author The_Fireplace
@@ -24,7 +28,7 @@ import the_fireplace.ias.config.ConfigValues;
 public class GuiAccountSelector extends GuiScreen {
 	private int selectedAccountIndex = 0;
 	private Throwable loginfailed;
-	private ArrayList<AccountData> queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
+	private ArrayList<ExtendedAccountData> queriedaccounts = convertData();
 	private GuiAccountSelector.List accountsgui;
 	//Buttons that can be disabled need to be here
 	private GuiButton login;
@@ -97,10 +101,10 @@ public class GuiAccountSelector extends GuiScreen {
 		accountsgui.drawScreen(par1, par2, par3);
 		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.selectaccount"), this.width / 2, 4, -1);
 		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
-			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, 14, -1);//TODO: Relocate, it overlaps the search field
+			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, 14, -1);//TODO: Relocate, it is behind the search field
 		}
 		if (loginfailed != null) {
-			this.drawCenteredString(fontRendererObj, loginfailed.getLocalizedMessage(), this.width / 2, 24, 16737380);//TODO: Relocate, it overlaps the search field
+			this.drawCenteredString(fontRendererObj, loginfailed.getLocalizedMessage(), this.width / 2, 24, 16737380);//TODO: Relocate, it is behind the search field
 		}
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
@@ -129,13 +133,6 @@ public class GuiAccountSelector extends GuiScreen {
 	}
 
 	/**
-	 * Used to ensure that the alt list here stays in sync with the main alt list
-	 */
-	private void refreshAlts(){
-		queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
-		updateQueried();
-	}
-	/**
 	 * Leave the gui
 	 */
 	private void escape(){
@@ -147,7 +144,7 @@ public class GuiAccountSelector extends GuiScreen {
 	private void delete(){
 		System.out.println("Delete called on "+queriedaccounts.get(selectedAccountIndex));
 		AltDatabase.getInstance().getAlts().remove(queriedaccounts.get(selectedAccountIndex));
-		refreshAlts();
+		updateQueried();
 		if(queriedaccounts.isEmpty()){
 			login.enabled = false;
 			loginoffline.enabled = false;
@@ -167,10 +164,11 @@ public class GuiAccountSelector extends GuiScreen {
 	 * 		The index of the account to log in to
 	 */
 	private void logino(int selected){
-		AccountData data = queriedaccounts.get(selected);
+		ExtendedAccountData data = queriedaccounts.get(selected);
 		AltManager.getInstance().setUserOffline(data.alias);
 		loginfailed = null;
 		Minecraft.getMinecraft().displayGuiScreen(null);
+		getCurrentAsEditable().useCount++;
 	}
 	/**
 	 * Attempt login to the account, then return to main menu if successful
@@ -178,11 +176,15 @@ public class GuiAccountSelector extends GuiScreen {
 	 * 		The index of the account to log in to
 	 */
 	private void login(int selected){
-		AccountData data = queriedaccounts.get(selected);
+		ExtendedAccountData data = queriedaccounts.get(selected);
 		loginfailed = AltManager.getInstance().setUser(data.user, data.pass);
 		if (loginfailed == null) {
 			Minecraft.getMinecraft().displayGuiScreen(null);
+			getCurrentAsEditable().premium=EnumBool.TRUE;
+		}else if(HttpTools.ping("authserver.mojang.com")){
+			getCurrentAsEditable().premium=EnumBool.FALSE;
 		}
+		getCurrentAsEditable().useCount++;
 	}
 	/**
 	 * Edits the current account's information
@@ -192,7 +194,7 @@ public class GuiAccountSelector extends GuiScreen {
 	}
 
 	private void updateQueried(){
-		queriedaccounts = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
+		queriedaccounts = convertData();
 		if(query != StatCollector.translateToLocal("ias.search") && query != ""){
 			for(int i=0;i<queriedaccounts.size();i++){
 				if(!queriedaccounts.get(i).alias.contains(query) && ConfigValues.CASESENSITIVE){
@@ -249,6 +251,34 @@ public class GuiAccountSelector extends GuiScreen {
 				updateQueried();
 			}
 		}
+	}
+	private ArrayList<ExtendedAccountData> convertData(){
+		ArrayList<AccountData> tmp = (ArrayList<AccountData>) AltDatabase.getInstance().getAlts().clone();
+		ArrayList<ExtendedAccountData> converted = new ArrayList();
+		int index=0;
+		for(AccountData data : tmp){
+			if(data instanceof ExtendedAccountData){
+				converted.add((ExtendedAccountData) data);
+			}else{
+				converted.add(new ExtendedAccountData(EncryptionTools.decode(data.user), EncryptionTools.decode(data.pass), data.alias));
+				AltDatabase.getInstance().getAlts().set(index, new ExtendedAccountData(EncryptionTools.decode(data.user), EncryptionTools.decode(data.pass), data.alias));
+			}
+			index++;
+		}
+		return converted;
+	}
+	private ArrayList<AccountData> getAccountList(){
+		return AltDatabase.getInstance().getAlts();
+	}
+	private ExtendedAccountData getCurrentAsEditable(){
+		for(AccountData dat : getAccountList()){
+			if(dat instanceof ExtendedAccountData){
+				if(((ExtendedAccountData)dat).equals(queriedaccounts.get(selectedAccountIndex))){
+					return (ExtendedAccountData) dat;
+				}
+			}
+		}
+		return null;
 	}
 	class List extends GuiSlot
 	{

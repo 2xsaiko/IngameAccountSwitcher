@@ -8,13 +8,14 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
-import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
+import the_fireplace.ias.account.ExtendedAccountData;
+import the_fireplace.ias.enums.EnumBool;
 import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * The GUI where the alt is added
@@ -23,6 +24,9 @@ import the_fireplace.iasencrypt.EncryptionTools;
 public class GuiEditAccount extends GuiScreen {
 
 	private String user = "", pass = "", cover = "";
+	private EnumBool premium;
+	private String[] lastused;
+	private int useCount;
 	private GuiTextField username;
 	private GuiTextField password;
 	private GuiButton addaccount;
@@ -34,6 +38,15 @@ public class GuiEditAccount extends GuiScreen {
 		this.pass=EncryptionTools.decode(AltDatabase.getInstance().getAlts().get(index).pass);
 		for(int i=0;i<pass.length();i++){
 			cover += '*';
+		}
+		if(AltDatabase.getInstance().getAlts().get(index) instanceof ExtendedAccountData){
+			lastused=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).lastused;
+			useCount=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).useCount;
+			premium=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).premium;
+		}else{
+			lastused=new String[3];
+			useCount=0;
+			premium=EnumBool.UNKNOWN;
 		}
 	}
 
@@ -171,7 +184,7 @@ public class GuiEditAccount extends GuiScreen {
 	 * Add account and return to account selector
 	 */
 	private void editAccount(){
-		AltDatabase.getInstance().getAlts().set(selectedIndex, new AccountData(user, pass, user));
+		AltDatabase.getInstance().getAlts().set(selectedIndex, new ExtendedAccountData(user, pass, user, useCount, lastused, premium));
 		mc.displayGuiScreen(new GuiAccountSelector());
 	}
 
