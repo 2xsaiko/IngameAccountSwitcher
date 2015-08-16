@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.DosFileAttributeView;
+import java.nio.file.attribute.DosFileAttributes;
 import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
@@ -106,6 +110,13 @@ public class Config implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		try{
+			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();//TODO: FIx this
+			DosFileAttributes attr = Files.readAttributes(file, DosFileAttributes.class);
+			DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
+			if(!attr.isHidden())
+				view.setHidden(true);
+		}catch(IOException e){}
 	}
 
 	private static void loadFromOld(){
