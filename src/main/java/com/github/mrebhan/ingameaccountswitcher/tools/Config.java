@@ -103,6 +103,15 @@ public class Config implements Serializable {
 	}
 
 	private static void getFromFile() {//Shouldn't this and saveToFile be switched? This saves data to the file.
+		try{
+			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();
+			DosFileAttributes attr = Files.readAttributes(file, DosFileAttributes.class);
+			DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
+			if(attr.isHidden())
+				view.setHidden(false);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName)));
 			out.writeObject(instance);
@@ -111,12 +120,14 @@ public class Config implements Serializable {
 			e.printStackTrace();
 		}
 		try{
-			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();//TODO: FIx this
+			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();
 			DosFileAttributes attr = Files.readAttributes(file, DosFileAttributes.class);
 			DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
 			if(!attr.isHidden())
 				view.setHidden(true);
-		}catch(IOException e){}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	private static void loadFromOld(){
