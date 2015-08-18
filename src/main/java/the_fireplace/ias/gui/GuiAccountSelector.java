@@ -102,11 +102,8 @@ public class GuiAccountSelector extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		accountsgui.drawScreen(par1, par2, par3);
 		this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.selectaccount"), this.width / 2, 4, -1);
-		if (Minecraft.getMinecraft().getSession().getToken().equals("0")) {
-			this.drawCenteredString(fontRendererObj, StatCollector.translateToLocal("ias.offlinemode"), this.width / 2, 14, -1);//TODO: Relocate, it is behind the search field
-		}
 		if (loginfailed != null) {
-			this.drawCenteredString(fontRendererObj, loginfailed.getLocalizedMessage(), this.width / 2, 24, 16737380);//TODO: Relocate, it is behind the search field
+			this.drawCenteredString(fontRendererObj, loginfailed.getLocalizedMessage(), this.width / 2, this.height - 62, 16737380);
 		}
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
