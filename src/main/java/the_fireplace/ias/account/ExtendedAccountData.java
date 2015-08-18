@@ -9,17 +9,17 @@ import the_fireplace.ias.enums.EnumBool;
 public class ExtendedAccountData extends AccountData {
 
 	public EnumBool premium;
-	public String[] lastused;
+	public int[] lastused;
 	public int useCount;
 
 	public ExtendedAccountData(String user, String pass, String alias) {
 		super(user, pass, alias);
 		useCount = 0;
-		lastused = new String[3];
+		lastused = new int[3];
 		premium = EnumBool.UNKNOWN;
 	}
 
-	public ExtendedAccountData(String user, String pass, String alias, int useCount, String[] lastused, EnumBool premium) {
+	public ExtendedAccountData(String user, String pass, String alias, int useCount, int[] lastused, EnumBool premium) {
 		super(user, pass, alias);
 		this.useCount = useCount;
 		this.lastused = lastused;

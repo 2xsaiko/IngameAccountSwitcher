@@ -25,7 +25,7 @@ public class GuiEditAccount extends GuiScreen {
 
 	private String user = "", pass = "", cover = "";
 	private EnumBool premium;
-	private String[] lastused;
+	private int[] lastused;
 	private int useCount;
 	private GuiTextField username;
 	private GuiTextField password;
@@ -44,7 +44,7 @@ public class GuiEditAccount extends GuiScreen {
 			useCount=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).useCount;
 			premium=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).premium;
 		}else{
-			lastused=new String[3];
+			lastused=new int[3];
 			useCount=0;
 			premium=EnumBool.UNKNOWN;
 		}
