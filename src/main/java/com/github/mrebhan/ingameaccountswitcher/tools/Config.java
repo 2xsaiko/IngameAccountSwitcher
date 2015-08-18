@@ -110,14 +110,12 @@ public class Config implements Serializable {
 			if(attr.isHidden())
 				view.setHidden(false);
 		}catch(Exception e){
-			e.printStackTrace();
 		}
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName)));
 			out.writeObject(instance);
 			out.close();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 		try{
 			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();
