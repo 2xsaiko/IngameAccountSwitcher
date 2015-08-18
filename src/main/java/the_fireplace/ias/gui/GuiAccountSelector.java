@@ -20,6 +20,7 @@ import the_fireplace.ias.account.ExtendedAccountData;
 import the_fireplace.ias.config.ConfigValues;
 import the_fireplace.ias.enums.EnumBool;
 import the_fireplace.ias.tools.HttpTools;
+import the_fireplace.ias.tools.SkinTools;
 import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * The GUI where you can log in to, add, and remove accounts
@@ -108,6 +109,7 @@ public class GuiAccountSelector extends GuiScreen {
 		}
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
+		SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package com.github.mrebhan.ingameaccountswitcher;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
 
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
@@ -13,10 +15,12 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.ias.config.ConfigValues;
 import the_fireplace.ias.events.FMLEvents;
 import the_fireplace.ias.events.ForgeEvents;
+import the_fireplace.ias.tools.SkinTools;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -49,6 +53,13 @@ public class IngameAccountSwitcher {
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
+	}
+	@EventHandler
+	public void postInit(FMLPostInitializationEvent event){
+		try {
+			Files.createDirectory(SkinTools.cachedir.toPath());
+		} catch (IOException e) {}
+		SkinTools.cacheSkins();
 	}
 
 	public static void setSession(Session s) throws Exception {
