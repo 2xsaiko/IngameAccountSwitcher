@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.input.Keyboard;
 
+import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltManager;
@@ -108,6 +109,7 @@ public class GuiAccountSelector extends GuiScreen {
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
 		SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
+		Tools.drawBorderedRect(width-8-64, height/2-64-16, width-8, height/2+64-16, 2, -5855578, -13421773);
 	}
 
 	@Override
