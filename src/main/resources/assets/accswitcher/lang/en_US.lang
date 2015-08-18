@@ -13,3 +13,4 @@ ias.editaccount=Edit Account
 ias.search=Search
 ias.cfg.casesensitive=Case Sensitive Searching
 ias.cfg.casesensitive.tooltip=Should account searches be case sensitive?
+ias.updatejava=(You need to update your Java!)
