@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 
 import the_fireplace.ias.enums.EnumBool;
+import the_fireplace.ias.tools.JavaTools;
 
 public class ExtendedAccountData extends AccountData {
 
@@ -15,7 +16,7 @@ public class ExtendedAccountData extends AccountData {
 	public ExtendedAccountData(String user, String pass, String alias) {
 		super(user, pass, alias);
 		useCount = 0;
-		lastused = new int[3];
+		lastused = JavaTools.getJavaCompat().getDate();
 		premium = EnumBool.UNKNOWN;
 	}
 

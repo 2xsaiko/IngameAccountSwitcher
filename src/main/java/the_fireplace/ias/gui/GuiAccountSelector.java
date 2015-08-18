@@ -20,6 +20,7 @@ import the_fireplace.ias.account.ExtendedAccountData;
 import the_fireplace.ias.config.ConfigValues;
 import the_fireplace.ias.enums.EnumBool;
 import the_fireplace.ias.tools.HttpTools;
+import the_fireplace.ias.tools.JavaTools;
 import the_fireplace.ias.tools.SkinTools;
 import the_fireplace.iasencrypt.EncryptionTools;
 /**
@@ -171,6 +172,7 @@ public class GuiAccountSelector extends GuiScreen {
 		loginfailed = null;
 		Minecraft.getMinecraft().displayGuiScreen(null);
 		getCurrentAsEditable().useCount++;
+		getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
 	}
 	/**
 	 * Attempt login to the account, then return to main menu if successful
@@ -187,6 +189,7 @@ public class GuiAccountSelector extends GuiScreen {
 			getCurrentAsEditable().premium=EnumBool.FALSE;
 		}
 		getCurrentAsEditable().useCount++;
+		getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
 	}
 	/**
 	 * Edits the current account's information

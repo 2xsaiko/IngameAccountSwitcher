@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
 import the_fireplace.ias.account.ExtendedAccountData;
 import the_fireplace.ias.enums.EnumBool;
+import the_fireplace.ias.tools.JavaTools;
 import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * The GUI where the alt is added
@@ -44,7 +45,7 @@ public class GuiEditAccount extends GuiScreen {
 			useCount=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).useCount;
 			premium=((ExtendedAccountData)AltDatabase.getInstance().getAlts().get(index)).premium;
 		}else{
-			lastused=new int[3];
+			lastused=JavaTools.getJavaCompat().getDate();
 			useCount=0;
 			premium=EnumBool.UNKNOWN;
 		}
