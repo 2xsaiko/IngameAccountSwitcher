@@ -17,6 +17,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
+import the_fireplace.ias.account.AlreadyLoggedInException;
 import the_fireplace.ias.account.ExtendedAccountData;
 import the_fireplace.ias.config.ConfigValues;
 import the_fireplace.ias.enums.EnumBool;
@@ -193,6 +194,8 @@ public class GuiAccountSelector extends GuiScreen {
 			Minecraft.getMinecraft().displayGuiScreen(null);
 			getCurrentAsEditable().premium=EnumBool.TRUE;
 			getCurrentAsEditable().useCount++;
+			getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
+		}else if(loginfailed instanceof AlreadyLoggedInException){
 			getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
 		}else if(HttpTools.ping("http://minecraft.net")){
 			getCurrentAsEditable().premium=EnumBool.FALSE;

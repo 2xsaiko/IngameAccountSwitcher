@@ -12,6 +12,7 @@ import com.mojang.util.UUIDTypeAdapter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
+import the_fireplace.ias.account.AlreadyLoggedInException;
 import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * @author mrebhan
@@ -41,22 +42,32 @@ public class AltManager {
 	}
 
 	public Throwable setUser(String username, String password) {
-		this.auth.logOut();
-		this.auth.setUsername(EncryptionTools.decode(username));
-		this.auth.setPassword(EncryptionTools.decode(password));
 		Throwable throwable = null;
-		try {
-			this.auth.logIn();
-			Session session = new Session(this.auth.getSelectedProfile().getName(), UUIDTypeAdapter.fromUUID(auth.getSelectedProfile().getId()), this.auth.getAuthenticatedToken(), this.auth.getUserType().getName());
-			IngameAccountSwitcher.setSession(session);
-			for (int i = 0; i < AltDatabase.getInstance().getAlts().size(); i++) {
-				AccountData data = AltDatabase.getInstance().getAlts().get(i);
-				if (data.user.equals(username) && data.pass.equals(password)) {
-					data.alias = session.getUsername();
+		if(Minecraft.getMinecraft().getSession().getUsername() != EncryptionTools.decode(username)){
+			for (AccountData data : AltDatabase.getInstance().getAlts()) {
+				if (data.alias.equals(Minecraft.getMinecraft().getSession().getUsername()) && data.user.equals(username)) {
+					throwable = new AlreadyLoggedInException();
+					return throwable;
 				}
 			}
-		} catch (Exception e) {
-			throwable = e;
+			this.auth.logOut();
+			this.auth.setUsername(EncryptionTools.decode(username));
+			this.auth.setPassword(EncryptionTools.decode(password));
+			try {
+				this.auth.logIn();
+				Session session = new Session(this.auth.getSelectedProfile().getName(), UUIDTypeAdapter.fromUUID(auth.getSelectedProfile().getId()), this.auth.getAuthenticatedToken(), this.auth.getUserType().getName());
+				IngameAccountSwitcher.setSession(session);
+				for (int i = 0; i < AltDatabase.getInstance().getAlts().size(); i++) {
+					AccountData data = AltDatabase.getInstance().getAlts().get(i);
+					if (data.user.equals(username) && data.pass.equals(password)) {
+						data.alias = session.getUsername();
+					}
+				}
+			} catch (Exception e) {
+				throwable = e;
+			}
+		}else{
+			throwable = new AlreadyLoggedInException();
 		}
 		return throwable;
 	}
