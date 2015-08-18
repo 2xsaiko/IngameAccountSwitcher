@@ -118,6 +118,8 @@ public class GuiAccountSelector extends GuiScreen {
 				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.notpremium"), width-8-61, height/2-64-13, 16737380);
 			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.timesused"), width-8-61, height/2-64-15+12, -1);
 			this.drawString(fontRendererObj, String.valueOf(queriedaccounts.get(selectedAccountIndex).useCount), width-8-61, height/2-64-15+21, -1);
+			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.lastused"), width-8-61, height/2-64-15+30, -1);
+			this.drawString(fontRendererObj, JavaTools.getJavaCompat().getFormattedDate(), width-8-61, height/2-64-15+39, -1);
 		}
 	}
 

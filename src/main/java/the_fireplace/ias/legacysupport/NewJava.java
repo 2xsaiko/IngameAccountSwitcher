@@ -1,6 +1,9 @@
 package the_fireplace.ias.legacysupport;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 public class NewJava implements ILegacyCompat {
 	@Override
@@ -13,7 +16,9 @@ public class NewJava implements ILegacyCompat {
 	}
 
 	@Override
-	public String getMessage() {
-		return "";
+	public String getFormattedDate() {
+		DateTimeFormatter format = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+		LocalDate date = LocalDateTime.now().withDayOfMonth(getDate()[1]).withMonth(getDate()[0]).withYear(getDate()[2]).toLocalDate();
+		return date.format(format);
 	}
 }

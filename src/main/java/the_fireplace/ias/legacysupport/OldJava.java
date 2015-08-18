@@ -13,7 +13,7 @@ public class OldJava implements ILegacyCompat {
 	}
 
 	@Override
-	public String getMessage() {
+	public String getFormattedDate() {
 		return StatCollector.translateToLocal("ias.updatejava");
 	}
 
