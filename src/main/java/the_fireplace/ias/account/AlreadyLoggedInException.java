@@ -1,8 +1,10 @@
 package the_fireplace.ias.account;
 
+import net.minecraft.util.StatCollector;
+
 public class AlreadyLoggedInException extends Exception {
 	@Override
 	public String getLocalizedMessage(){
-		return "You are already logged in to this account";
+		return StatCollector.translateToLocal("ias.alreadyloggedin");
 	}
 }

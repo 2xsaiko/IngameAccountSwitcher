@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 
 import net.minecraft.client.gui.GuiButton;
@@ -15,6 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
 import the_fireplace.ias.account.ExtendedAccountData;
+import the_fireplace.iasencrypt.EncryptionTools;
 /**
  * The GUI where the alt is added
  * @author The_Fireplace
@@ -59,7 +61,7 @@ public class GuiAddAccount extends GuiScreen {
 			if(username.isFocused()){
 				username.setFocused(false);
 				password.setFocused(true);
-			}else if(password.isFocused()){
+			}else if(password.isFocused() && addaccount.enabled){
 				addAccount();
 			}
 		} else if (keyIndex == Keyboard.KEY_BACK) {
@@ -119,7 +121,7 @@ public class GuiAddAccount extends GuiScreen {
 	{
 		this.username.updateCursorCounter();
 		this.password.updateCursorCounter();
-		addaccount.enabled = username.getText().length() > 0;
+		addaccount.enabled = username.getText().length() > 0 && accountNotInList();
 		updateText();
 	}
 
@@ -170,5 +172,14 @@ public class GuiAddAccount extends GuiScreen {
 	private void updateText(){
 		username.setText(user);
 		password.setText(cover);
+	}
+
+	private boolean accountNotInList(){
+		for(AccountData data : AltDatabase.getInstance().getAlts()){
+			if(EncryptionTools.decode(data.user).equals(user) && EncryptionTools.decode(data.pass).equals(pass)){
+				return false;
+			}
+		}
+		return true;
 	}
 }

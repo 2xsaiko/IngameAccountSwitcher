@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
+import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 
 import net.minecraft.client.gui.GuiButton;
@@ -30,7 +31,7 @@ public class GuiEditAccount extends GuiScreen {
 	private int useCount;
 	private GuiTextField username;
 	private GuiTextField password;
-	private GuiButton addaccount;
+	private GuiButton editaccount;
 	private int selectedIndex;
 
 	public GuiEditAccount(int index){
@@ -55,14 +56,14 @@ public class GuiEditAccount extends GuiScreen {
 	public void initGui() {
 		Keyboard.enableRepeatEvents(true);
 		this.buttonList.clear();
-		this.buttonList.add(addaccount = new GuiButton(2, this.width / 2 - 152, this.height - 28, 150, 20, StatCollector.translateToLocal("ias.editaccount")));
+		this.buttonList.add(editaccount = new GuiButton(2, this.width / 2 - 152, this.height - 28, 150, 20, StatCollector.translateToLocal("ias.editaccount")));
 		this.buttonList.add(new GuiButton(3, this.width / 2 + 2, this.height - 28, 150, 20, StatCollector.translateToLocal("gui.cancel")));
 		username = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
 		username.setFocused(true);
 		username.setText(user);
 		password = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 100, 90, 200, 20);
 		password.setText(pass);
-		addaccount.enabled = username.getText().length() > 0;
+		editaccount.enabled = username.getText().length() > 0 && accountNotInList();
 	}
 
 	@Override
@@ -84,7 +85,7 @@ public class GuiEditAccount extends GuiScreen {
 			if(username.isFocused()){
 				username.setFocused(false);
 				password.setFocused(true);
-			}else if(password.isFocused()){
+			}else if(password.isFocused() && editaccount.enabled){
 				editAccount();
 			}
 		} else if (keyIndex == Keyboard.KEY_BACK) {
@@ -144,7 +145,7 @@ public class GuiEditAccount extends GuiScreen {
 	{
 		this.username.updateCursorCounter();
 		this.password.updateCursorCounter();
-		addaccount.enabled = username.getText().length() > 0;
+		editaccount.enabled = username.getText().length() > 0 && accountNotInList();
 		updateText();
 	}
 
@@ -195,5 +196,14 @@ public class GuiEditAccount extends GuiScreen {
 	private void updateText(){
 		username.setText(user);
 		password.setText(cover);
+	}
+
+	private boolean accountNotInList(){
+		for(AccountData data : AltDatabase.getInstance().getAlts()){
+			if(EncryptionTools.decode(data.user).equals(user) && EncryptionTools.decode(data.pass).equals(pass)){
+				return false;
+			}
+		}
+		return true;
 	}
 }

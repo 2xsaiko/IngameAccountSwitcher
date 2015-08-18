@@ -60,10 +60,7 @@ public class GuiAccountSelector extends GuiScreen {
 		this.buttonList.add(delete = new GuiButton(4, this.width / 2 - 50, this.height - 28, 100, 20, StatCollector.translateToLocal("ias.delete")));
 		search  = new GuiTextField(8, this.fontRendererObj, this.width / 2 - 80, 14, 160, 16);
 		search.setText(query);
-		login.enabled = !queriedaccounts.isEmpty();
-		loginoffline.enabled = !queriedaccounts.isEmpty();
-		delete.enabled = !queriedaccounts.isEmpty();
-		edit.enabled = !queriedaccounts.isEmpty();
+		updateButtons();
 	}
 	@Override
 	public void handleMouseInput() throws IOException
@@ -76,6 +73,7 @@ public class GuiAccountSelector extends GuiScreen {
 	public void updateScreen(){
 		this.search.updateCursorCounter();
 		updateText();
+		updateButtons();
 	}
 
 	@Override
@@ -87,6 +85,7 @@ public class GuiAccountSelector extends GuiScreen {
 		if(!flag && search.isFocused()){
 			query = "";
 			updateText();
+			updateQueried();
 		}
 	}
 
@@ -118,8 +117,10 @@ public class GuiAccountSelector extends GuiScreen {
 				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.notpremium"), width-8-61, height/2-64-13, 16737380);
 			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.timesused"), width-8-61, height/2-64-15+12, -1);
 			this.drawString(fontRendererObj, String.valueOf(queriedaccounts.get(selectedAccountIndex).useCount), width-8-61, height/2-64-15+21, -1);
-			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.lastused"), width-8-61, height/2-64-15+30, -1);
-			this.drawString(fontRendererObj, JavaTools.getJavaCompat().getFormattedDate(), width-8-61, height/2-64-15+39, -1);
+			if(queriedaccounts.get(selectedAccountIndex).useCount > 0){
+				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.lastused"), width-8-61, height/2-64-15+30, -1);
+				this.drawString(fontRendererObj, JavaTools.getJavaCompat().getFormattedDate(), width-8-61, height/2-64-15+39, -1);
+			}
 		}
 	}
 
@@ -131,13 +132,13 @@ public class GuiAccountSelector extends GuiScreen {
 				escape();
 			}else if(button.id == 0){
 				add();
-			}else if(button.id == 4 && !queriedaccounts.isEmpty()){
+			}else if(button.id == 4){
 				delete();
-			}else if(button.id == 1 && !queriedaccounts.isEmpty()){
+			}else if(button.id == 1){
 				login(selectedAccountIndex);
-			}else if(button.id == 2 && !queriedaccounts.isEmpty()){
+			}else if(button.id == 2){
 				logino(selectedAccountIndex);
-			}else if(button.id == 7 && !queriedaccounts.isEmpty()){
+			}else if(button.id == 7){
 				edit();
 			}else{
 				accountsgui.actionPerformed(button);
@@ -156,14 +157,10 @@ public class GuiAccountSelector extends GuiScreen {
 	 */
 	private void delete(){
 		AltDatabase.getInstance().getAlts().remove(getCurrentAsEditable());
-		selectedAccountIndex--;
+		if(selectedAccountIndex > 0)
+			selectedAccountIndex--;
 		updateQueried();
-		if(queriedaccounts.isEmpty()){
-			login.enabled = false;
-			loginoffline.enabled = false;
-			delete.enabled = false;
-			edit.enabled = false;
-		}
+		updateButtons();
 	}
 	/**
 	 * Add an account
@@ -223,31 +220,37 @@ public class GuiAccountSelector extends GuiScreen {
 				}
 			}
 		}
+		if(!queriedaccounts.isEmpty()){
+			while(selectedAccountIndex >= queriedaccounts.size()){
+				selectedAccountIndex--;
+			}
+		}
 	}
 
 	@Override
 	protected void keyTyped(char character, int keyIndex) {
-		if (keyIndex == Keyboard.KEY_UP) {
+		if (keyIndex == Keyboard.KEY_UP && !queriedaccounts.isEmpty()) {
 			if (selectedAccountIndex > 0) {
 				selectedAccountIndex--;
 			}
-		} else if (keyIndex == Keyboard.KEY_DOWN) {
+		} else if (keyIndex == Keyboard.KEY_DOWN && !queriedaccounts.isEmpty()) {
 			if (selectedAccountIndex < queriedaccounts.size() - 1) {
 				selectedAccountIndex++;
 			}
 		} else if(keyIndex == Keyboard.KEY_ESCAPE){
 			escape();
-		} else if(keyIndex == Keyboard.KEY_DELETE){
+		} else if(keyIndex == Keyboard.KEY_DELETE && delete.enabled){
 			delete();
 		} else if(character == '+'){
 			add();
-		} else if(character == '/'){
+		} else if(character == '/' && edit.enabled){
 			edit();
-		} else if(keyIndex == Keyboard.KEY_RETURN && !search.isFocused()){
-			if(Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)){
+		} else if(keyIndex == Keyboard.KEY_RETURN && !search.isFocused() && (login.enabled || loginoffline.enabled)){
+			if((Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) && loginoffline.enabled){
 				logino(selectedAccountIndex);
 			}else{
-				login(selectedAccountIndex);
+				if(login.enabled)
+					login(selectedAccountIndex);
 			}
 		} else if(keyIndex == Keyboard.KEY_BACK){
 			if (search.isFocused() && query.length() > 0) {
@@ -297,6 +300,12 @@ public class GuiAccountSelector extends GuiScreen {
 		}
 		return null;
 	}
+	private void updateButtons(){
+		login.enabled = !queriedaccounts.isEmpty() && !EncryptionTools.decode(queriedaccounts.get(selectedAccountIndex).pass).equals("");
+		loginoffline.enabled = !queriedaccounts.isEmpty();
+		delete.enabled = !queriedaccounts.isEmpty();
+		edit.enabled = !queriedaccounts.isEmpty();
+	}
 	class List extends GuiSlot
 	{
 		public List(Minecraft mcIn)
@@ -314,13 +323,9 @@ public class GuiAccountSelector extends GuiScreen {
 		protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY)
 		{
 			GuiAccountSelector.this.selectedAccountIndex = slotIndex;
-			boolean flag = GuiAccountSelector.this.selectedAccountIndex >= 0 && GuiAccountSelector.this.selectedAccountIndex < this.getSize();
-			GuiAccountSelector.this.login.enabled = flag;
-			GuiAccountSelector.this.loginoffline.enabled = flag;
-			GuiAccountSelector.this.delete.enabled = flag;
-			GuiAccountSelector.this.edit.enabled = flag;
+			GuiAccountSelector.this.updateButtons();
 
-			if (isDoubleClick && flag)
+			if (isDoubleClick && GuiAccountSelector.this.login.enabled)
 			{
 				GuiAccountSelector.this.login(slotIndex);
 			}
