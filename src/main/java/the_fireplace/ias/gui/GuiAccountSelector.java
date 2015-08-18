@@ -108,8 +108,16 @@ public class GuiAccountSelector extends GuiScreen {
 		}
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
-		SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
-		Tools.drawBorderedRect(width-8-64, height/2-64-16, width-8, height/2+64-16, 2, -5855578, -13421773);
+		if(!queriedaccounts.isEmpty()){
+			SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
+			Tools.drawBorderedRect(width-8-64, height/2-64-16, width-8, height/2+64-16, 2, -5855578, -13421773);
+			if(queriedaccounts.get(selectedAccountIndex).premium == EnumBool.TRUE)
+				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.premium"), width-8-61, height/2-64-13, 6618980);
+			else if(queriedaccounts.get(selectedAccountIndex).premium == EnumBool.FALSE)
+				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.notpremium"), width-8-61, height/2-64-13, 16737380);
+			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.timesused"), width-8-61, height/2-64-15+12, -1);
+			this.drawString(fontRendererObj, String.valueOf(queriedaccounts.get(selectedAccountIndex).useCount), width-8-61, height/2-64-15+21, -1);
+		}
 	}
 
 	@Override
@@ -144,8 +152,8 @@ public class GuiAccountSelector extends GuiScreen {
 	 * Delete the selected account
 	 */
 	private void delete(){
-		System.out.println("Delete called on "+queriedaccounts.get(selectedAccountIndex));
-		AltDatabase.getInstance().getAlts().remove(queriedaccounts.get(selectedAccountIndex));
+		AltDatabase.getInstance().getAlts().remove(getCurrentAsEditable());
+		selectedAccountIndex--;
 		updateQueried();
 		if(queriedaccounts.isEmpty()){
 			login.enabled = false;
@@ -184,11 +192,11 @@ public class GuiAccountSelector extends GuiScreen {
 		if (loginfailed == null) {
 			Minecraft.getMinecraft().displayGuiScreen(null);
 			getCurrentAsEditable().premium=EnumBool.TRUE;
-		}else if(HttpTools.ping("authserver.mojang.com")){
+			getCurrentAsEditable().useCount++;
+			getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
+		}else if(HttpTools.ping("http://minecraft.net")){
 			getCurrentAsEditable().premium=EnumBool.FALSE;
 		}
-		getCurrentAsEditable().useCount++;
-		getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
 	}
 	/**
 	 * Edits the current account's information

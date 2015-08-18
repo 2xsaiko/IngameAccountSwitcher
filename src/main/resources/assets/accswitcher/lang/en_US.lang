@@ -14,3 +14,7 @@ ias.search=Search
 ias.cfg.casesensitive=Case Sensitive Searching
 ias.cfg.casesensitive.tooltip=Should account searches be case sensitive?
 ias.updatejava=(You need to update your Java!)
+ias.premium=Premium
+ias.notpremium=Not Premium
+ias.timesused=Times Used:
+ias.lastused=Last Used:

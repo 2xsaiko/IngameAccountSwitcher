@@ -56,7 +56,6 @@ public class AltManager {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			throwable = e;
 		}
 		return throwable;
