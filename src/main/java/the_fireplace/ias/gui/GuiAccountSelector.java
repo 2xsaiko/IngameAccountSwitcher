@@ -178,8 +178,9 @@ public class GuiAccountSelector extends GuiScreen {
 		AltManager.getInstance().setUserOffline(data.alias);
 		loginfailed = null;
 		Minecraft.getMinecraft().displayGuiScreen(null);
-		getCurrentAsEditable().useCount++;
-		getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
+		ExtendedAccountData current = getCurrentAsEditable();
+		current.useCount++;
+		current.lastused=JavaTools.getJavaCompat().getDate();
 	}
 	/**
 	 * Attempt login to the account, then return to main menu if successful
@@ -191,9 +192,10 @@ public class GuiAccountSelector extends GuiScreen {
 		loginfailed = AltManager.getInstance().setUser(data.user, data.pass);
 		if (loginfailed == null) {
 			Minecraft.getMinecraft().displayGuiScreen(null);
-			getCurrentAsEditable().premium=EnumBool.TRUE;
-			getCurrentAsEditable().useCount++;
-			getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
+			ExtendedAccountData current = getCurrentAsEditable();
+			current.premium=EnumBool.TRUE;
+			current.useCount++;
+			current.lastused=JavaTools.getJavaCompat().getDate();
 		}else if(loginfailed instanceof AlreadyLoggedInException){
 			getCurrentAsEditable().lastused=JavaTools.getJavaCompat().getDate();
 		}else if(HttpTools.ping("http://minecraft.net")){
