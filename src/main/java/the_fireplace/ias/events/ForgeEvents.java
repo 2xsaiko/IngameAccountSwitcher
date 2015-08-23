@@ -2,12 +2,12 @@ package the_fireplace.ias.events;
 
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import the_fireplace.ias.gui.GuiAccountSelector;
 import the_fireplace.ias.gui.GuiButtonWithImage;
 

@@ -34,10 +34,10 @@ public class GuiAddAccount extends GuiScreen {
 		this.buttonList.clear();
 		this.buttonList.add(addaccount = new GuiButton(2, this.width / 2 - 152, this.height - 28, 150, 20, StatCollector.translateToLocal("ias.addaccount")));
 		this.buttonList.add(new GuiButton(3, this.width / 2 + 2, this.height - 28, 150, 20, StatCollector.translateToLocal("gui.cancel")));
-		username = new GuiTextField(0, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
+		username = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
 		username.setFocused(true);
 		username.setText(user);
-		password = new GuiTextField(1, this.fontRendererObj, this.width / 2 - 100, 90, 200, 20);
+		password = new GuiTextField(this.fontRendererObj, this.width / 2 - 100, 90, 200, 20);
 		password.setText(cover);
 		addaccount.enabled = username.getText().length() > 0;
 	}
@@ -138,7 +138,7 @@ public class GuiAddAccount extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
 	{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		username.mouseClicked(mouseX, mouseY, mouseButton);

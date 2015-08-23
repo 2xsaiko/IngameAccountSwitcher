@@ -6,17 +6,17 @@ import java.nio.file.Files;
 
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
 
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.ias.config.ConfigValues;
 import the_fireplace.ias.events.FMLEvents;
 import the_fireplace.ias.events.ForgeEvents;
@@ -25,14 +25,13 @@ import the_fireplace.ias.tools.SkinTools;
  * @author mrebhan
  * @author The_Fireplace
  */
-@Mod(modid=IngameAccountSwitcher.MODID, name=IngameAccountSwitcher.MODNAME, version=IngameAccountSwitcher.VERSION, clientSideOnly=true, guiFactory="the_fireplace.ias.config.IASGuiFactory")
+@Mod(modid=IngameAccountSwitcher.MODID, name=IngameAccountSwitcher.MODNAME, version=IngameAccountSwitcher.VERSION, guiFactory="the_fireplace.ias.config.IASGuiFactory")
 public class IngameAccountSwitcher {
 	@Instance(value=IngameAccountSwitcher.MODID)
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.2.2.0";
-	public static final String downloadURL = "http://goo.gl/1erpBM";
+	public static final String VERSION = "bp1.7.10(2.2.2.0)";
 	public static Configuration config;
 
 	public static Property CASESENSITIVE_PROPERTY;
@@ -53,13 +52,6 @@ public class IngameAccountSwitcher {
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
-	}
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event){
-		try {
-			Files.createDirectory(SkinTools.cachedir.toPath());
-		} catch (IOException e) {}
-		SkinTools.cacheSkins();
 	}
 
 	public static void setSession(Session s) throws Exception {
@@ -86,5 +78,4 @@ public class IngameAccountSwitcher {
 			throw e;
 		}
 	}
-	public static final String LATEST = "https://dl.dropboxusercontent.com/s/l2i7ua5u4j5i8sc/release.version?dl=0";
 }

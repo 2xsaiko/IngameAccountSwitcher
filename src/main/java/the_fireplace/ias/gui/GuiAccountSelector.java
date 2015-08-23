@@ -16,6 +16,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.StatCollector;
 import the_fireplace.ias.account.AlreadyLoggedInException;
 import the_fireplace.ias.account.ExtendedAccountData;
@@ -58,15 +59,9 @@ public class GuiAccountSelector extends GuiScreen {
 		this.buttonList.add(loginoffline = new GuiButton(2, this.width / 2 - 154 - 10, this.height - 28, 110, 20, StatCollector.translateToLocal("ias.login")+" "+StatCollector.translateToLocal("ias.offline")));
 		this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 50, this.height - 28, 110, 20, StatCollector.translateToLocal("gui.cancel")));
 		this.buttonList.add(delete = new GuiButton(4, this.width / 2 - 50, this.height - 28, 100, 20, StatCollector.translateToLocal("ias.delete")));
-		search  = new GuiTextField(8, this.fontRendererObj, this.width / 2 - 80, 14, 160, 16);
+		search  = new GuiTextField(this.fontRendererObj, this.width / 2 - 80, 14, 160, 16);
 		search.setText(query);
 		updateButtons();
-	}
-	@Override
-	public void handleMouseInput() throws IOException
-	{
-		super.handleMouseInput();
-		this.accountsgui.handleMouseInput();
 	}
 
 	@Override
@@ -77,7 +72,7 @@ public class GuiAccountSelector extends GuiScreen {
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
 	{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		boolean flag = search.isFocused();
@@ -109,7 +104,10 @@ public class GuiAccountSelector extends GuiScreen {
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
 		if(!queriedaccounts.isEmpty()){
-			SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
+			//SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
+			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.nopreview1"), 2, height/2-10, -1);
+			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.nopreview2"), 2, height/2, -1);
+			this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.nopreview3"), 2, height/2+10, -1);
 			Tools.drawBorderedRect(width-8-64, height/2-64-16, width-8, height/2+64-16, 2, -5855578, -13421773);
 			if(queriedaccounts.get(selectedAccountIndex).premium == EnumBool.TRUE)
 				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.premium"), width-8-61, height/2-64-13, 6618980);
@@ -352,15 +350,14 @@ public class GuiAccountSelector extends GuiScreen {
 		}
 
 		@Override
-		protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_)
-		{
+		protected void drawSlot(int entryID, int par2, int par3, int p_148126_4_, Tessellator p_148126_5_, int p_148126_6_, int p_148126_7_) {
 			String s = GuiAccountSelector.this.queriedaccounts.get(entryID).alias;
 			if (StringUtils.isEmpty(s))
 			{
 				s = StatCollector.translateToLocal("ias.alt") + " " + (entryID + 1);
 			}
 
-			GuiAccountSelector.this.drawString(GuiAccountSelector.this.fontRendererObj, s, p_180791_2_ + 2, p_180791_3_ + 1, 16777215);
+			GuiAccountSelector.this.drawString(GuiAccountSelector.this.fontRendererObj, s, par2 + 2, par3 + 1, 16777215);
 		}
 	}
 }
