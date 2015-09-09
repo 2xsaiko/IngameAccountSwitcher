@@ -13,7 +13,6 @@ import java.nio.file.attribute.DosFileAttributeView;
 import java.nio.file.attribute.DosFileAttributes;
 import java.util.ArrayList;
 
-import net.minecraft.client.Minecraft;
 import the_fireplace.iasencrypt.Standards;
 /**
  * @author mrebhan
@@ -73,16 +72,16 @@ public class Config implements Serializable {
 	}
 
 	public static void save() {
-		getFromFile();
+		saveToFile();
 	}
 
 	public static void load() {
 		loadFromOld();
-		saveToFile();
+		readFromFile();
 	}
 
-	private static void saveToFile() {//Shouldn't this and getFromFile be switched? This gets data from the file.
-		File f = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName);
+	private static void readFromFile() {
+		File f = new File(Standards.IASFOLDER, configFileName);
 		if (f.exists()) {
 			try {
 				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(f));
@@ -102,9 +101,9 @@ public class Config implements Serializable {
 			instance = new Config();
 	}
 
-	private static void getFromFile() {//Shouldn't this and saveToFile be switched? This saves data to the file.
+	private static void saveToFile() {
 		try{
-			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();
+			Path file = new File(Standards.IASFOLDER, configFileName).toPath();
 			DosFileAttributes attr = Files.readAttributes(file, DosFileAttributes.class);
 			DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
 			if(attr.isHidden())
@@ -112,13 +111,13 @@ public class Config implements Serializable {
 		}catch(Exception e){
 		}
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName)));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(new File(Standards.IASFOLDER, configFileName)));
 			out.writeObject(instance);
 			out.close();
 		} catch (IOException e) {
 		}
 		try{
-			Path file = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, configFileName).toPath();
+			Path file = new File(Standards.IASFOLDER, configFileName).toPath();
 			DosFileAttributes attr = Files.readAttributes(file, DosFileAttributes.class);
 			DosFileAttributeView view = Files.getFileAttributeView(file, DosFileAttributeView.class);
 			if(!attr.isHidden())
@@ -129,7 +128,7 @@ public class Config implements Serializable {
 	}
 
 	private static void loadFromOld(){
-		File f = new File(Minecraft.getMinecraft().mcDataDir+Standards.IASFOLDER, "user.cfg");
+		File f = new File(Standards.IASFOLDER, "user.cfg");
 		if (f.exists()) {
 			try {
 				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(f));
