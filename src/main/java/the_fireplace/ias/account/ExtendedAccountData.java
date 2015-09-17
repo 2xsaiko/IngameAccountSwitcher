@@ -56,4 +56,21 @@ public class ExtendedAccountData extends AccountData {
 		}
 		return true;
 	}
+
+	public boolean equalsBasic(Object obj){
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		AccountData other = (AccountData) obj;
+		if(!user.equals(other.user)){
+			return false;
+		}
+		return true;
+	}
 }
