@@ -32,7 +32,7 @@ public class IngameAccountSwitcher {
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
 	public static final String VERSION = "2.2.3.0";
-	public static final String downloadURL = "http://goo.gl/1erpBM";
+	public static final String downloadURL = "http://goo.gl/WPK0af";
 	public static Configuration config;
 
 	public static Property CASESENSITIVE_PROPERTY;
