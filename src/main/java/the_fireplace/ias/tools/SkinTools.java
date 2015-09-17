@@ -173,6 +173,8 @@ public class SkinTools {
 		}
 	}
 	public static boolean isSkinSlim(BufferedImage img){
+		if(img == null)
+			return false;
 		return img.getRGB(54, 25)>>24 == 0x00;
 	}
 	public static void cacheSkins(){
