@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import the_fireplace.ias.config.ConfigValues;
@@ -31,7 +32,7 @@ public class IngameAccountSwitcher {
 	public static IngameAccountSwitcher instance;
 	public static final String MODID = "IngameAccountSwitcher";
 	public static final String MODNAME = "In-game Account Switcher";
-	public static final String VERSION = "2.2.4.0";
+	public static final String VERSION = "2.2.5.0";
 	public static final String downloadURL = "http://goo.gl/WPK0af";
 	public static Configuration config;
 
@@ -50,6 +51,9 @@ public class IngameAccountSwitcher {
 		config.load();
 		CASESENSITIVE_PROPERTY = config.get(Configuration.CATEGORY_GENERAL, ConfigValues.CASESENSITIVE_NAME, ConfigValues.CASESENSITIVE_DEFAULT, ConfigValues.CASESENSITIVE_NAME+".tooltip");
 		syncConfig();
+	}
+	@EventHandler
+	public void init(FMLInitializationEvent event){
 		Config.load();
 		FMLCommonHandler.instance().bus().register(new FMLEvents());
 		MinecraftForge.EVENT_BUS.register(new ForgeEvents());
