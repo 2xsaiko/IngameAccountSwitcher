@@ -6,7 +6,9 @@ import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 
 import the_fireplace.ias.enums.EnumBool;
 import the_fireplace.ias.tools.JavaTools;
-
+/**
+ * @author The_Fireplace
+ */
 public class ExtendedAccountData extends AccountData {
 
 	public EnumBool premium;
@@ -52,23 +54,6 @@ public class ExtendedAccountData extends AccountData {
 			return false;
 		}
 		if(!pass.equals(other.pass)){
-			return false;
-		}
-		return true;
-	}
-
-	public boolean equalsBasic(Object obj){
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		AccountData other = (AccountData) obj;
-		if(!user.equals(other.user)){
 			return false;
 		}
 		return true;
