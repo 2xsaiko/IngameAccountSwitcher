@@ -3,7 +3,7 @@
   "modid": "IngameAccountSwitcher",
   "name": "In-Game Account Switcher",
   "description": "Allows you to change which account you are signed in to in-game without restarting Minecraft.",
-  "version": "2.2.5.0",
+  "version": "2.2.6.0",
   "mcversion": "1.8",
   "url": "http://goo.gl/WPK0af",
   "updateUrl": "http://goo.gl/WPK0af",
