@@ -16,18 +16,18 @@ public class AltDatabase implements Serializable {
 	public static final long serialVersionUID = 0xA17DA7AB;
 	private static AltDatabase instance;
 
-	private ArrayList<AccountData> altList;
+	private final ArrayList<AccountData> altList;
 
 	private AltDatabase() {
 		this.altList = new ArrayList();
 	}
 
-	public static void loadFromConfig() {
+	private static void loadFromConfig() {
 		if (instance == null)
 			instance = (AltDatabase) Config.getInstance().getKey("altaccounts");
 	}
 
-	public static void saveToConfig() {
+	private static void saveToConfig() {
 		Config.getInstance().setKey(new Pair<String, Object>("altaccounts", instance));
 	}
 

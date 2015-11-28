@@ -23,16 +23,16 @@ import the_fireplace.iasencrypt.EncryptionTools;
  * The GUI where the alt is added
  * @author The_Fireplace
  */
-public class GuiEditAccount extends GuiScreen {
+class GuiEditAccount extends GuiScreen {
 
 	private String user = "", pass = "", cover = "";
-	private EnumBool premium;
-	private int[] lastused;
-	private int useCount;
+	private final EnumBool premium;
+	private final int[] lastused;
+	private final int useCount;
 	private GuiTextField username;
 	private GuiTextField password;
 	private GuiButton editaccount;
-	private int selectedIndex;
+	private final int selectedIndex;
 
 	public GuiEditAccount(int index){
 		this.selectedIndex=index;

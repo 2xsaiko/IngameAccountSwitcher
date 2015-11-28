@@ -5,7 +5,7 @@ import the_fireplace.ias.legacysupport.NewJava;
 import the_fireplace.ias.legacysupport.OldJava;
 
 public class JavaTools {
-	public static double getJavaVersion(){
+	private static double getJavaVersion(){
 		String version = System.getProperty("java.version");
 		int pos = version.indexOf('.');
 		pos = version.indexOf('.', pos+1);

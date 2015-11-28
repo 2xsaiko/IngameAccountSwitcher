@@ -50,12 +50,6 @@ public class ExtendedAccountData extends AccountData {
 		if (useCount != other.useCount) {
 			return false;
 		}
-		if(!user.equals(other.user)){
-			return false;
-		}
-		if(!pass.equals(other.pass)){
-			return false;
-		}
-		return true;
+		return user.equals(other.user) && pass.equals(other.pass);
 	}
 }

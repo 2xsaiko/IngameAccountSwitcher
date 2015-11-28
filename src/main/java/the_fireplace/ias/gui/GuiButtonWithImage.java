@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class GuiButtonWithImage extends GuiButton {
 
-	protected static final ResourceLocation customButtonTextures = new ResourceLocation("accswitcher:textures/gui/custombutton.png");
+	private static final ResourceLocation customButtonTextures = new ResourceLocation("accswitcher:textures/gui/custombutton.png");
 	public GuiButtonWithImage(int buttonId, int x, int y, int widthIn,
 			int heightIn, String buttonText) {
 		super(buttonId, x, y, widthIn, heightIn, buttonText);

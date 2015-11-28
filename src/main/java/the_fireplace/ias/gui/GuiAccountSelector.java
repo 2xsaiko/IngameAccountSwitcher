@@ -1,22 +1,17 @@
 package the_fireplace.ias.gui;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.apache.commons.lang3.StringUtils;
-import org.lwjgl.input.Keyboard;
-
 import com.github.mrebhan.ingameaccountswitcher.tools.Tools;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AccountData;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltDatabase;
 import com.github.mrebhan.ingameaccountswitcher.tools.alt.AltManager;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.util.StatCollector;
+import org.apache.commons.lang3.StringUtils;
+import org.lwjgl.input.Keyboard;
 import the_fireplace.ias.account.AlreadyLoggedInException;
 import the_fireplace.ias.account.ExtendedAccountData;
 import the_fireplace.ias.config.ConfigValues;
@@ -25,12 +20,16 @@ import the_fireplace.ias.tools.HttpTools;
 import the_fireplace.ias.tools.JavaTools;
 import the_fireplace.ias.tools.SkinTools;
 import the_fireplace.iasencrypt.EncryptionTools;
+
+import java.io.IOException;
+import java.util.ArrayList;
 /**
  * The GUI where you can log in to, add, and remove accounts
  * @author The_Fireplace
  */
 public class GuiAccountSelector extends GuiScreen {
 	private int selectedAccountIndex = 0;
+	private int prevIndex = 0;
 	private Throwable loginfailed;
 	private ArrayList<ExtendedAccountData> queriedaccounts = convertData();
 	private GuiAccountSelector.List accountsgui;
@@ -61,6 +60,8 @@ public class GuiAccountSelector extends GuiScreen {
 		search  = new GuiTextField(8, this.fontRendererObj, this.width / 2 - 80, 14, 160, 16);
 		search.setText(query);
 		updateButtons();
+		if(!queriedaccounts.isEmpty())
+		SkinTools.buildSkin(queriedaccounts.get(selectedAccountIndex).alias);
 	}
 	@Override
 	public void handleMouseInput() throws IOException
@@ -74,6 +75,11 @@ public class GuiAccountSelector extends GuiScreen {
 		this.search.updateCursorCounter();
 		updateText();
 		updateButtons();
+		if(!(prevIndex == selectedAccountIndex)) {
+			if (!queriedaccounts.isEmpty())
+				SkinTools.buildSkin(queriedaccounts.get(selectedAccountIndex).alias);
+			prevIndex = selectedAccountIndex;
+		}
 	}
 
 	@Override
@@ -109,7 +115,7 @@ public class GuiAccountSelector extends GuiScreen {
 		search.drawTextBox();
 		super.drawScreen(par1, par2, par3);
 		if(!queriedaccounts.isEmpty()){
-			SkinTools.drawSkinFront(queriedaccounts.get(selectedAccountIndex).alias, 8, height/2-64-16, 64, 128);
+			SkinTools.javDrawSkin(8, height/2-64-16, 64, 128);
 			Tools.drawBorderedRect(width-8-64, height/2-64-16, width-8, height/2+64-16, 2, -5855578, -13421773);
 			if(queriedaccounts.get(selectedAccountIndex).premium == EnumBool.TRUE)
 				this.drawString(fontRendererObj, StatCollector.translateToLocal("ias.premium"), width-8-61, height/2-64-13, 6618980);
@@ -295,7 +301,7 @@ public class GuiAccountSelector extends GuiScreen {
 	private ExtendedAccountData getCurrentAsEditable(){
 		for(AccountData dat : getAccountList()){
 			if(dat instanceof ExtendedAccountData){
-				if(((ExtendedAccountData)dat).equals(queriedaccounts.get(selectedAccountIndex))){
+				if(dat.equals(queriedaccounts.get(selectedAccountIndex))){
 					return (ExtendedAccountData) dat;
 				}
 			}

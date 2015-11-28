@@ -9,11 +9,11 @@ import java.util.List;
  */
 
 public class CallQueue {
-	private static List queueList = new ArrayList<QueueElement>();
+	private static final List queueList = new ArrayList<QueueElement>();
 
 	public static void onTick() {
-		for (int i = 0; i < queueList.size(); i++) {
-			QueueElement element = (QueueElement) queueList.get(i);
+		for (Object aQueueList : queueList) {
+			QueueElement element = (QueueElement) aQueueList;
 			element.onTick();
 		}
 

@@ -1,19 +1,13 @@
 package com.github.mrebhan.ingameaccountswitcher.tools;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import the_fireplace.iasencrypt.Standards;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.DosFileAttributeView;
 import java.nio.file.attribute.DosFileAttributes;
 import java.util.ArrayList;
-
-import the_fireplace.iasencrypt.Standards;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -31,16 +25,16 @@ public class Config implements Serializable {
 		return instance;
 	}
 
-	public Config() {
+	private Config() {
 		this.field_218893_c = new ArrayList<Pair<String, Object>>();
-		this.instance = this;
+		instance = this;
 	}
 
 	public void setKey(Pair<String, Object> key) {
 		if (this.getKey(key.getValue1()) != null)
 			this.removeKey(key.getValue1());
 		field_218893_c.add(key);
-		this.save();
+		save();
 	}
 
 	public void setKey(String key, Object value) {
@@ -56,15 +50,15 @@ public class Config implements Serializable {
 			System.out.println("Error: Config failed to load during PreInitialization. Loading now.");
 			load();
 		}
-		for (int i = 0; i < field_218893_c.size(); i++) {
-			if (field_218893_c.get(i).getValue1().equals(key))
-				return field_218893_c.get(i).getValue2();
+		for (Pair<String, Object> aField_218893_c : field_218893_c) {
+			if (aField_218893_c.getValue1().equals(key))
+				return aField_218893_c.getValue2();
 		}
 
 		return null;
 	}
 
-	public void removeKey(String key) {
+	private void removeKey(String key) {
 		for (int i = 0; i < field_218893_c.size(); i++) {
 			if (field_218893_c.get(i).getValue1().equals(key))
 				field_218893_c.remove(i);

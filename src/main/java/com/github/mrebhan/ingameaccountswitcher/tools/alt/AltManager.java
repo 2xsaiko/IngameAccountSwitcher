@@ -1,36 +1,31 @@
 package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
-import java.util.UUID;
-
-import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
+import com.github.mrebhan.ingameaccountswitcher.MR;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.AuthenticationService;
 import com.mojang.authlib.UserAuthentication;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.util.UUIDTypeAdapter;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 import the_fireplace.ias.account.AlreadyLoggedInException;
 import the_fireplace.iasencrypt.EncryptionTools;
+
+import java.util.UUID;
 /**
  * @author mrebhan
  */
 public class AltManager {
 	private static AltManager manager = null;
-	public AuthenticationService authService;
-	public MinecraftSessionService sessionService;
-	public UUID uuid;
-	public UserAuthentication auth;
-	private String currentUser;
-	private String currentPass;
+	private final UserAuthentication auth;
+	//private String currentUser;
+	//private String currentPass;
 
 	private AltManager() {
-		uuid = UUID.randomUUID();
-		authService = new YggdrasilAuthenticationService(Minecraft.getMinecraft().getProxy(), uuid.toString());
+		UUID uuid = UUID.randomUUID();
+		AuthenticationService authService = new YggdrasilAuthenticationService(Minecraft.getMinecraft().getProxy(), uuid.toString());
 		auth = authService.createUserAuthentication(Agent.MINECRAFT);
-		sessionService = authService.createMinecraftSessionService();
+		authService.createMinecraftSessionService();
 	}
 
 	public static AltManager getInstance() {
@@ -56,7 +51,7 @@ public class AltManager {
 			try {
 				this.auth.logIn();
 				Session session = new Session(this.auth.getSelectedProfile().getName(), UUIDTypeAdapter.fromUUID(auth.getSelectedProfile().getId()), this.auth.getAuthenticatedToken(), this.auth.getUserType().getName());
-				IngameAccountSwitcher.setSession(session);
+				MR.setSession(session);
 				for (int i = 0; i < AltDatabase.getInstance().getAlts().size(); i++) {
 					AccountData data = AltDatabase.getInstance().getAlts().get(i);
 					if (data.user.equals(username) && data.pass.equals(password)) {
@@ -72,14 +67,13 @@ public class AltManager {
 		return throwable;
 	}
 
-	public boolean setUserOffline(String username) {
+	public void setUserOffline(String username) {
 		this.auth.logOut();
 		Session session = new Session(username, username, "0", "legacy");
 		try {
-			IngameAccountSwitcher.setSession(session);
+			MR.setSession(session);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return true;
 	}
 }

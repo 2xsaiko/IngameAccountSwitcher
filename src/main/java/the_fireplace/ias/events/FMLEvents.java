@@ -1,6 +1,6 @@
 package the_fireplace.ias.events;
 
-import com.github.mrebhan.ingameaccountswitcher.IngameAccountSwitcher;
+import the_fireplace.ias.IAS;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -10,6 +10,8 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
+import the_fireplace.ias.tools.Reference;
+
 /**
  * @author The_Fireplace
  */
@@ -28,8 +30,8 @@ public class FMLEvents {
 	}
 	@SubscribeEvent
 	public void configChanged(ConfigChangedEvent event){
-		if(event.modID.equals(IngameAccountSwitcher.MODID)){
-			IngameAccountSwitcher.syncConfig();
+		if(event.modID.equals(Reference.MODID)){
+			IAS.syncConfig();
 		}
 	}
 }
