@@ -1,10 +1,10 @@
 The_Fireplace:
 This is the versioning system I use for all of my mods. Here is how the system works:
 Version X.Y.Z.A
-X = The major Minecraft version the build is for. My mods use 1.7.10 as 1, and 1.8 as 2.
+X = The major Minecraft version the build is for. My mods use 1.7.10 as 1, 1.8 as 2, and 1.8.8 as 3.
 Y = The content release of the mod. Basically, if an update contains new content, such as blocks, items, mobs, or major internal changes, this number will increase.
-Z = The internal version of the mod. When this number increases, it contains bugfixes or minor internal changes. If this number is 0, it is not considered a stable release, but a beta build of that content version. 1 is considered the first stable build of the version.
-A = This will only be above 0 on the beta versions. It is the beta build number.
+Z = The internal version of the mod. When this number increases, it contains bugfixes or minor internal changes.
+A = This will only be above 0 on builds made using Jenkins. It is he build number.
 
 Backport versions:
 If requested, I will make a backport version of a mod. Their versions will look like this:
@@ -12,7 +12,3 @@ Version bpW(X.Y.Z.A)
 bp stands for backport
 W = The version of minecraft being backported to. Will be a full version number, such as 1.7.10 or 1.6.2.
 X.Y.Z.A = The version of the mod it was backported from.
-
-Changelogs will be done on full releases, and sometimes on the beta builds.
-
-This information should always be up to date, but in case it isn't, here is the thread: http://thefireplace.clanwebsite.com/210538/topic/my-mod-versioning-system-v28
