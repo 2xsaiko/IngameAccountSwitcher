@@ -1,12 +1,11 @@
 package com.github.mrebhan.ingameaccountswitcher.tools.alt;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-
 import com.github.mrebhan.ingameaccountswitcher.tools.Config;
-import com.github.mrebhan.ingameaccountswitcher.tools.Pair;
 import com.github.mrebhan.ingameaccountswitcher.tools.queuing.CallQueue;
 import com.github.mrebhan.ingameaccountswitcher.tools.queuing.QueueElement;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 /**
  * @author mrebhan
  * @author The_Fireplace
@@ -28,7 +27,7 @@ public class AltDatabase implements Serializable {
 	}
 
 	private static void saveToConfig() {
-		Config.getInstance().setKey(new Pair<String, Object>("altaccounts", instance));
+		Config.getInstance().setKey("altaccounts", instance);
 	}
 
 	public static AltDatabase getInstance() {
