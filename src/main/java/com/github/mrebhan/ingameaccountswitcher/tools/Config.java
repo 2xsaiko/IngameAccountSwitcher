@@ -1,5 +1,6 @@
 package com.github.mrebhan.ingameaccountswitcher.tools;
 
+import net.minecraft.client.Minecraft;
 import the_fireplace.iasencrypt.Standards;
 
 import java.io.*;
@@ -122,7 +123,7 @@ public class Config implements Serializable {
 	}
 
 	private static void loadFromOld(){
-		File f = new File(Standards.IASFOLDER, "user.cfg");
+		File f = new File(Minecraft.getMinecraft().mcDataDir, "user.cfg");
 		if (f.exists()) {
 			try {
 				ObjectInputStream stream = new ObjectInputStream(new FileInputStream(f));
